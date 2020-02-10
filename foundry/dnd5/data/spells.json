@@ -1,0 +1,69 @@
+{
+    "Armor of Agathys": {
+        "Level": 1
+    },
+    "Arms of Hadar": {
+        "Level": 1
+    },
+    "Blade Ward": {
+        "Level": 0
+    },
+    "Charm Person": {
+        "Level": 1
+    },
+    "Chill Touch": {
+        "Level": 0
+    },
+    "Comprehend Languages": {
+        "Level": 1
+    },
+    "Eldritch Blast": {
+        "Level": 0,
+        "School": "Evocation",
+        "Casting Time": 1,
+        "Classes": ["Warlock"],
+        "Range": 120,
+        "Components": ["V", "S"],
+        "Duration": "Instantaneous",
+        "Text": "A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1dlO force damage. The spell creates more than one beam when you reach higher levels: two beams at 5th level, three beams at 11th level, and four beams at 17th level. You can direct the beams at the same target or at different ones. Make a separate attack roll for each beam."
+    },
+    "Expeditious Retreat": {
+        "Level": 1
+    },
+    "Friends": {
+        "Level": 0
+    },
+    "Hellish Rebuke": {
+        "Level": 1
+    },
+    "Hex": {
+        "Level": 1
+    },
+    "Illusory Script": {
+        "Level": 1
+    },
+    "Mage Hand": {
+        "Level": 0
+    },
+    "Minor Illusion": {
+        "Level": 0
+    },
+    "Poison Spray": {
+        "Level": 0
+    },
+    "Prestidigitation": {
+        "Level": 0
+    },
+    "Protection from Evil and Good": {
+        "Level": 1
+    },
+    "True Strike": {
+        "Level": 0
+    },
+    "Unseen Servant": {
+        "Level": 1
+    },
+    "Witch Bolt": {
+        "Level": 1
+    }
+}

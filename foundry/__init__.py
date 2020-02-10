@@ -5,13 +5,9 @@ from flask import Flask
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
-    # app.config.from_mapping(
-    #     SERVER_NAME='foundry.com:5000'
-    # )
-
-    app.config['SERVER_NAME'] = "foundry.com:5000"
-
-
+    app.config.from_mapping(
+        SERVER_NAME='foundry.com:5000'
+    )
 
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
@@ -27,7 +23,7 @@ def create_app(test_config=None):
     def hello():
         return 'Hello World'
 
-    from . import dnd5
+    from .dnd5 import dnd5
     app.register_blueprint(dnd5.bp)
 
     return app

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename='javascript/spells.js') }}"></script>
+{% endblock head %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            
+            {% for spell, info in spells.items() %}
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ spell }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Level: {{ info['Level'] }} {{info['School'] }}</p> <!-- needs fixing -->
+                            Casting Time: {{ info['Casting Time']}}
+                            Range: {{ info['Range'] }}
+                            Components: {{ info['Components'] }}
+                            Duration: {{ info['Duration'] }}
+                            <hr/>
+                            {{ info['Text'] }}
+                        </div>
+                    </div>
+                </div>
+                
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
