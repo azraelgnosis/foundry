@@ -26,4 +26,7 @@ def create_app(test_config=None):
     from .dnd5 import dnd5
     app.register_blueprint(dnd5.bp)
 
+    from .ffxiv import ffxiv
+    app.register_blueprint(ffxiv.bp)
+
     return app
