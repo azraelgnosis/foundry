@@ -29,4 +29,7 @@ def create_app(test_config=None):
     from .ffxiv import ffxiv
     app.register_blueprint(ffxiv.bp)
 
+    from .coc7 import coc7
+    app.register_blueprint(coc7.bp)
+
     return app

@@ -1,0 +1,35 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block content %}
+<h1>{{ character.name }}</h1>
+<img height=200 src="{{ character.portrait }}" />
+
+<table>
+    <thead>
+        <tr>
+            <th>Class/Job</th>
+            <th>Level</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in character.jobs %}
+            {% if job['Level'] > 0 %}        
+                <tr>
+                    <td>{{ job['Name'] }}</td>
+                    <td>{{ job['Level'] }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        {% for job in character.jobs %}
+            {% if job['Level'] == 0 %}        
+                <tr>
+                    <td>{{ job['Name'] }}</td>
+                    <td>{{ job['Level'] }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

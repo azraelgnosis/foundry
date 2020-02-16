@@ -1,4 +1,32 @@
 {% extends 'ffxiv/base.html' %}
 
 {% block content %}
+    <form method='POST'>
+        <label for='name'>Character Name</label>
+        <input type="text" name="name" />
+
+        <label for='server'>Server</label>
+        <select name='server'>
+            <option value=""></option>
+            {% for data_center, servers in worlds['North American'].items() %}
+                <optgroup label="{{ data_center }}">
+                    {% for server in servers %}
+                        <option value="{{ server }}">{{ server }}</option>
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Search"/>
+    </form>
+
+    {% if characters %}
+        <ul>
+            {% for character in characters %}
+                <li>
+                    <a href="{{ url_for('ffxiv.character', id=character['ID']) }}">{{ character['Name'] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock content %}
