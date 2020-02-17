@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block base %}
-    <nav></nav>
-    {% block content %}
-    
-    {% endblock content %}
+
+    <a class="dropdown-item" href="{{ url_for('dnd5.books', book='master') }}">Dungeon Master's Guide</a>
+    <a class="dropdown-item" href="{{ url_for('dnd5.books', book='player') }}">Player's Handbook</a>
+    <a class="dropdown-item" href="{{ url_for('dnd5.books', book='monster') }}">Monster Manual</a>
+
+    {% block content %}{% endblock content %}
 {% endblock base %}

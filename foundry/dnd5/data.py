@@ -8,3 +8,10 @@ def get_spells():
         spells = json.load(f)
 
     return spells
+
+
+anyflip_books = {
+    "master": "ncyu",
+    "monster": "riec",
+    "player": "nkyr"
+}
