@@ -22,4 +22,4 @@ class Character:
         }
 
     def _set_build(self):
-        
+        pass

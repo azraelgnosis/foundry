@@ -2,7 +2,8 @@ from flask import (
     Blueprint, render_template, request
 )
 
-from .data import WORLDS, search_character, get_character
+from .data import WORLDS, search_character, get_character_api
+from .models import Character
 
 bp = Blueprint('ffxiv', __name__, subdomain='ffxiv')
 
@@ -18,12 +19,10 @@ def index():
 
     return render_template('ffxiv/index.html', worlds=WORLDS, characters=characters)
 
-#????
-@bp.route('/characters')
-def characters(): ...
+@bp.route('/characters/<int:lodestone_id>')
+def character(lodestone_id):
+    character = get_character_api(lodestone_id)
 
-@bp.route('/characters/<int:id>')
-def character(id):
-    character = get_character(id)
+
 
     return render_template('ffxiv/character.html', character=character)

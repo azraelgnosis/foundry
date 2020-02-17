@@ -21,12 +21,26 @@
     </form>
 
     {% if characters %}
-        <ul>
-            {% for character in characters %}
-                <li>
-                    <a href="{{ url_for('ffxiv.character', id=character['ID']) }}">{{ character['Name'] }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <p>{{ characters|length }} Results</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Character Name</th>
+                    <th>Lodestone ID</th>
+                    <th>Server</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for character in characters %}
+                        <tr>
+                            <td><img src="{{ character['Avatar'] }}" /></td>
+                            <td><a href="{{ url_for('ffxiv.character', lodestone_id=character['ID']) }}">{{ character['Name'] }}</a></td>
+                            <td>{{ character['ID'] }}</td>
+                            <td>{{ character['Server'] }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 {% endblock content %}

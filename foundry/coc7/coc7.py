@@ -4,6 +4,6 @@ from flask import (
 
 bp = Blueprint("coc7", __name__)
 
-@bp.route('characters/new', methods=('GET', 'POST'))
+@bp.route('/characters/new', methods=('GET', 'POST'))
 def new_character():
     return
