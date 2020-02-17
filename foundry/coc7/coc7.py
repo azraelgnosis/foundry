@@ -2,6 +2,8 @@ from flask import (
     Blueprint, render_template
 )
 
+from .data import anyflip_books
+
 bp = Blueprint("coc7", __name__, subdomain='coc7')
 
 @bp.route('/')
@@ -12,9 +14,11 @@ def index():
 def new_character():
     return
 
-@bp.route('/books/')
-@bp.route('/books/<string:title>')
-def books(title:str=""):
-    if title:
-        return render_template(f'coc7/books/{title}.html')
+@bp.route('/books/') #?
+@bp.route('/books/<string:book>')
+def books(book:str=""):
+    if book:
+        user = anyflip_books.get(book).get('user')
+        code = anyflip_books.get(book).get('book')
+        return render_template(f'coc7/book.html', user=user, code=code)
     return render_template('coc7/books/books.html')
