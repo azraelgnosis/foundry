@@ -37,6 +37,8 @@ def search_character(name:str, server=None):
         search_url_by_page = f"{search_url}&page={page}"
         response = json.loads(requests.get(search_url_by_page).content)
         results.extend(response["Results"])
+        for result in response['Results']:
+            character = Character().f
 
     return results
 

@@ -14,12 +14,12 @@ class Character:
             "EDU": 0
         }
 
-        self.attributes = {
-            "Luck": 0,
-            "MP": 0,
-            "DMG": 0,
-            "Build": 0
-        }
+        # self.attributes = {
+        #     "Luck": 0,
+        #     "MP": 0,
+        #     "DMG": 0,
+        #     "Build": 0
+        # }
 
     def _set_build(self):
         pass

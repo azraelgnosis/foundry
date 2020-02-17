@@ -26,12 +26,15 @@ JOBS = {
 }
 
 class Character:
-    __slots__ = ["player", "name", "race", "clan", "jobs", "server", 'avatar', 'portrait']
+    __slots__ = ['lodestone_id', "player", "name", "race", "clan", "jobs", "server", 'avatar', 'portrait']
 
-    def __init__(self, id, name, jobs={}, portrait=None):
+    def __init__(self, lodestone_id=None, name=None, jobs={}, avatar=None, portrait=None, server=None):
+        self.lodestone_id = lodestone_id
         self.name = name
         self.jobs = jobs
         self.portrait = portrait
+        self.avatar = avatar
+        self.server = server
 
     #     self._set_jobs()
 
@@ -43,6 +46,7 @@ class Character:
     def json(self):
         json = {
             'name': self.name,
+            'lodestone_id': self.lodestone_id,
             'jobs': {
                 "Hand": {},
                 "Land": {},
@@ -70,10 +74,23 @@ class Character:
                     "Samurai": {},
                     "Warrior": {}
                 }
-            }
+            },
+            'portrait': self.portrait,
+            'avatar': self.avatar
         }
 
         return json
+
+    def from_api(self, json_data:dict):
+        Character = json_data['Character']
+        Avatar = Character['Avatar']
+
+class CharacterCreator:
+    @staticmethod
+    def from_xiv_api(json_data):
+        Character = json_data['Character']
+        Avatar = Character['Avatar']
+
 
 class Job:
     DISCIPLINES = [disciple for disciple in JOBS.keys()]
