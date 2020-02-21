@@ -23,6 +23,9 @@ def create_app(test_config=None):
     def hello():
         return 'Hello World'
 
+    from . import foundry
+    app.register_blueprint(foundry.bp)
+
     from .dnd5 import dnd5
     app.register_blueprint(dnd5.bp)
 

@@ -1,0 +1,26 @@
+{
+	"Bio": {
+		"DoT": {
+			"Potency": 20,
+			"Duration": 30
+		}
+	},
+	"Energy Drain": {
+		"DMG": 100,
+		"Additional": "Aetherflow II"
+	},
+	"Fester": {
+		"DMG": 100
+	},
+	"Miasma": {
+		"DMG": 20,
+		"DoT": {
+			"Potency": 20,
+			"Duration": 30
+		}
+	},
+	"Ruin": {
+		"DMG": 180
+	}
+
+}

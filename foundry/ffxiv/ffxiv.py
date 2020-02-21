@@ -26,3 +26,7 @@ def character(lodestone_id):
 
 
     return render_template('ffxiv/character.html', character=character)
+
+@bp.route('/actions/')
+def actions():
+    return render_template('ffxiv/actions.html')

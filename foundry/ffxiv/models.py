@@ -102,4 +102,8 @@ class Job:
         self.name = name if name in Job.JOB_list else KeyError
         self.discipline = discipline if discipline in Job.DISCIPLINES else KeyError
 
-        
+class Action:
+    __slots__ = ["name", "level", "description"]
+
+class Spell(Action):
+    __slots__ = ["dmg", "dot", "mp_cost", "casting", "recast", "range", "radius", "targeting"]

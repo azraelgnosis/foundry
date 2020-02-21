@@ -5,7 +5,11 @@
 {% endblock head %}
 
 {% block base %}
-    <nav></nav>
+    <nav class="navbar-nav">
+        <ul>
+            <li class="nav-item"><a class="nav-item" href="{{ url_for('ffxiv.actions') }}">Actions</a></li>
+        </ul>
+    </nav>
     {% block content %}
     
     {% endblock content %}
