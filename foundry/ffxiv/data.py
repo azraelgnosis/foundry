@@ -19,6 +19,8 @@ WORLDS = {
     }
 }
 
+JOBS = {} #? This is defined in models.py but should it be here?
+
 #TODO: Add separate pages
 def search_character(name:str, server=None):
     name = url_string(name)
@@ -61,6 +63,10 @@ def load_characters() -> list:
 def get_character_db(lodestone_id:int) -> Character:
     pass
 
-
 def url_string(string:str):
     return string.replace(" ", "+")
+
+def get_actions():
+    with open(f"{data_path}/actions.json", "r") as f:
+        actions = json.load(f)
+    return actions

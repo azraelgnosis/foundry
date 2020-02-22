@@ -1,1 +1,57 @@
 {% extends 'ffxiv/base.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Action</th>
+            </tr>
+        </thead>
+            <form method="POST">
+                <tr>
+                    <td><input type="text" class="form-control" name="name" placeholder="Action Name" required/></td>
+                    <td>
+                        <select id="action_type">
+                            {% for type in types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input type="submit" class="btn btn-primary" value="Add Action"/>
+                    <button type="submit" class="btn btn-primary">Add Action</button></td>
+                </tr>
+
+                </tr id="Ability">
+                    <td>
+                        Ability
+                    </td>
+                <tr>
+                
+                <tr id="Spell">
+                    <td>
+                        Spell
+                        <label>Class/Job</label>
+                        <select>
+    
+                        </select>
+    
+                        <label>DMG</label>
+                        <input type="number" />
+                    </td>
+                </tr>
+
+                
+            </form>
+        {% for action in actions %}
+            <tr>
+                <td>{{ action }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    
+{% endblock content %}
+
+{% block scripts %}
+        <script src="{{ url_for('static', filename='ffxiv/javascript/actions.js') }}"></script> 
+{% endblock scripts %}

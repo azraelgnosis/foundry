@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Spell</th>
+                <th>Class/Job</th>
+                <th>Level</th>
+                <th>Cast Time</th>
+                <th>Cool Down</th>
+                <th>Range</th>
+                <th>Radius</th>
+                <th>Target</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <form>
+                    <td><input type="text" name="name" placeholder="Spell name" /></td>
+                    <td></td>
+                    <td><input type="number" name="level" /></td>
+                    <td><input type="number" name="cast_time" />s</td>
+                    <td><input type="submit" /></td>
+                </form>
+            </tr>
+            {% for spell in spells %}
+                <tr>
+                    <td>{{ spell }}</td>
+                    <td>{{ spell['job'] }}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+{% endblock content %}
