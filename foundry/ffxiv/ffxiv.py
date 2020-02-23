@@ -6,7 +6,7 @@ import json
 from .data import (
     WORLDS, search_character, get_character_api, get_data, set_data
 )
-from .models import Character, Job
+from .models import Character, Job, Item
 
 bp = Blueprint('ffxiv', __name__, subdomain='ffxiv')
 
@@ -30,33 +30,31 @@ def character(lodestone_id):
 
 @bp.route('/actions/')
 def actions():
-    actions = get_data("actions")
+    from .data import get_actions
+    actions = get_actions()
 
     #! this should go somewhere else
     types = ["Ability", "Spell"]
 
     return render_template('ffxiv/actions.html', actions=actions, types=types)
 
-@bp.route('/materials/', methods=('GET', 'POST'))
-def materials():
-    from .models import Material
-    from .data import VALUES
-
-    materials = get_data('materials')
+@bp.route('/items/', methods=('GET', 'POST'))
+def items():
+    items = get_data('items')
 
     if request.method == 'POST':
-        name = request.form['name']
-        Type = request.form['type']
-        value = request.form['value']
-        description = request.form['description']
+        name = request.form.get('name')
+        Type = request.form.get('type')
+        level = request.form.get('level')
+        value = request.form.get('value')
+        description = request.form.get('description')
 
-        new_material = Material(name=name, type=Type, value=value, description=description)
+        new_item = Item({'name':name, 'type':Type, 'description':description})
+        items[new_item.name] = new_item
 
-        materials[new_material.name] = new_material.json()
+        set_data('items', items)
 
-        set_data('materials', materials)        
-
-    return render_template('ffxiv/materials.html', materials=materials, jobs=Job.JOBS, types=Material.TYPES, values=VALUES)
+    return render_template('ffxiv/items.html', items=items, types=Item.TYPES, values=Item.VALUES)
 
 @bp.route('/recipes/', methods=('GET', 'POST'))
 def recipes():
@@ -67,7 +65,6 @@ def recipes():
         return NotImplementedError
     
     recipes = get_data('recipes')
+    items = get_data('items')
 
-    materials = get_data('materials')
-
-    return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, materials=materials, crystals=CRYSTALS)
+    return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, items=items, crystals=CRYSTALS)

@@ -1,0 +1,48 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <td>Type</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="POST">
+                <tr>
+                    <td><input type="text" id="name" name="name" required/></td>
+                    <td>
+                        <select class="form-control" id="type" name="type">
+                            {% for type in types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><textarea id="description", name="description" value=""></textarea></td>
+                    <td><input type="submit" value="Add Item"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="value" name="value">
+                            {% for value in values %}
+                                <option value="{{ value }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                
+            </form>
+
+            {% for _, item in items.items() %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.description }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

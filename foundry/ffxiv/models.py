@@ -110,6 +110,11 @@ class Job:
 class Action:
     __slots__ = ["name", "type", "level", "description"]
 
+    def __init__(self, obj:dict):
+        for key, val in obj.items():
+            setattr(self, key, val)
+
+
 class Spell(Action):
     __slots__ = ["job", "dmg", "effect", "mp_cost", "cast_time", "recast", "range", "radius", "target"]
 
@@ -117,7 +122,7 @@ class Ability(Action):
     __slots__ = ["effect"]
 
 class Effect:
-    __slots__ = ["target", "effect", "degree", "duraiton"]
+    __slots__ = ["attribute", "change", "duration"]
 
 class Recipe:
     #! duplicate of Material.TYPES?
@@ -146,33 +151,19 @@ class Recipe:
         return json
 
 class Item:
-    __slots__ = []
+    TYPES = ('Other', 'Ingredient', 'Meal')
+    VALUES = ('Unsellable',)
+
+    __slots__ = ["name", "type", "description"] 
+
+    def __init__(self, json:dict):
+        for key, val in json.items(): setattr(self, key, val)
+
     def json(self):
-        json = {key: getattr(self, key) for key in self.__slots__}
-        return json
+        return {key: getattr(self, key) for key in self.__slots__}
 
-class Weapon(Item): pass
-class Tool(Item): pass
-class Armor(Item): pass
-class Accessory(Item): pass
-class Medicine(Item): pass
-class Meal(Item): pass
-class Material(Item):
-    #! duplicate of Recipe.TYPES?
-    TYPES = {
-        "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
-        "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
-        "Other": ["Other"]
-    }
+class Meal(Item):
+    __slots__ = ["effects"]
 
-    #? obtained_by? purchased_from? dropped_by? used_for/in??
-    __slots__ = ["name", "type", "value", "description"] 
-
-    def __init__(self, name, type, value, description):
-        self.name = name
-        self.type = type
-        self.value = value
-        self.description = description
-
-class Minion(Item): pass
-class Mount(Item): pass
+class Armor(Item):
+    __slots__ = ["defence", "magic_defense", "materia_slots"]
