@@ -1,0 +1,27 @@
+input#max_quality {
+    width: 6em; /* 5 digits */
+}
+
+input#durability {
+    width: 4em; /* 2 digits */
+}
+
+input#difficulty {
+    width: 5em; /* 4 digits */
+}
+
+input#num_crafted {
+    width: 3em; /* 1 digit */
+}
+
+input#level {
+    width: 4em; /* 2 digits */
+}
+
+/* Crystals */
+input[id^="num_crystals"] {
+    width: 4em; /* 2 digits */
+}
+div[id^="crystals"] {
+    margin-bottom: 0;
+}

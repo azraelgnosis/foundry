@@ -1,13 +1,12 @@
 {% extends 'layout.html' %}
 
-{% block head %}
-    
-{% endblock head %}
+{% block head %}{% endblock head %}
 
 {% block base %}
-    <nav class="navbar-nav">
-        <ul>
-            <li class="nav-item"><a class="nav-item" href="{{ url_for('ffxiv.actions') }}">Actions</a></li>
+    <nav class="navbar navbar-expand">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('ffxiv.actions') }}">Actions</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('ffxiv.recipes') }}">Recipes</a></li>
         </ul>
     </nav>
     {% block content %}

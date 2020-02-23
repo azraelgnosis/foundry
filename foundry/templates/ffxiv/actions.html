@@ -1,5 +1,9 @@
 {% extends 'ffxiv/base.html' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='ffxiv/css/actions.css') }}" />
+{% endblock head %}
+
 {% block content %}
     <table class="table">
         <thead>
@@ -12,6 +16,7 @@
                     <td><input type="text" class="form-control" name="name" placeholder="Action Name" required/></td>
                     <td>
                         <select id="action_type">
+                            <option></option>
                             {% for type in types %}
                                 <option value="{{ type }}">{{ type }}</option>
                             {% endfor %}
@@ -21,13 +26,13 @@
                     <button type="submit" class="btn btn-primary">Add Action</button></td>
                 </tr>
 
-                </tr id="Ability">
+                <tr class="action_type_inputs" id="Ability">
                     <td>
                         Ability
                     </td>
-                <tr>
+                </tr>
                 
-                <tr id="Spell">
+                <tr class="action_type_inputs" id="Spell">
                     <td>
                         Spell
                         <label>Class/Job</label>

@@ -1,29 +1,4 @@
-JOBS = {
-    "Hand": {},
-    "Land": {},
-    "Magic": {
-        "Astrologian": {},
-        "Black Mage": {},
-        "Blue": {},
-        "Red Mage": {},
-        "Scholar": {},
-        "Summoner": {},
-        "White Mage": {}
-    },
-    "War": {
-        "Bard": {},
-        "Dancer": {},
-        "Dark Knight": {},
-        "Dragoon": {},
-        "Gunbreaker": {},
-        "Machinist": {},
-        "Monk": {},
-        "Ninja": {},
-        "Paladin": {},
-        "Samurai": {},
-        "Warrior": {}
-    }
-}
+
 
 class Character:
     __slots__ = ['lodestone_id', "player", "name", "race", "clan", "jobs", "server", 'avatar', 'portrait']
@@ -93,6 +68,32 @@ class CharacterCreator:
 
 
 class Job:
+    JOBS = {
+        "Hand": {},
+        "Land": {},
+        "Magic": {
+            "Astrologian": {},
+            "Black Mage": {},
+            "Blue": {},
+            "Red Mage": {},
+            "Scholar": {},
+            "Summoner": {},
+            "White Mage": {}
+        },
+        "War": {
+            "Bard": {},
+            "Dancer": {},
+            "Dark Knight": {},
+            "Dragoon": {},
+            "Gunbreaker": {},
+            "Machinist": {},
+            "Monk": {},
+            "Ninja": {},
+            "Paladin": {},
+            "Samurai": {},
+            "Warrior": {}
+        }
+    }
     DISCIPLINES = [disciple for disciple in JOBS.keys()]
     JOB_list = [(job for job in JOBS) for discipline, JOBS in JOBS.items()]
 
@@ -113,3 +114,28 @@ class Ability(Action):
 
 class Effect:
     __slots__ = ["target", "effect", "degree", "duraiton"]
+
+class Recipe:
+    TYPES = {
+        "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
+        "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
+        "Other": ["Other"]
+    }
+    __slots__ = ["name", "job", "level", "type", "num_crafted", "difficulty", "durability", "max_quality", "materials", "crystals"]
+
+    def __init__(self, name, job, level, type, num_crafted, difficulty, durability, max_quality, materials, crystals):
+        self.name = name
+        self.job = job
+        self.level = level
+        self.type = type
+        self.num_crafted = num_crafted
+        self.difficulty = difficulty
+        self.durability = durability
+        self.max_quality = max_quality
+        self.materials = materials
+        self.crystals = crystals
+
+    def json(self):
+        json = {key: getattr(self, key) for key in self.__slots__}
+
+        return json

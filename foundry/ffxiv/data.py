@@ -19,7 +19,9 @@ WORLDS = {
     }
 }
 
-JOBS = {} #? This is defined in models.py but should it be here?
+ELEMENTS = ("Earth", "Fire", "Ice", "Lightning", "Water", "Wind")
+CRYSTAL_CONFIGURATIONS = ("Shard", "Crystal", "Cluster") #? There's probably a better word than "configuraiton"
+CRYSTALS = {element: [configuration for configuration in CRYSTAL_CONFIGURATIONS] for element in ELEMENTS}
 
 #TODO: Add separate pages
 def search_character(name:str, server=None):
@@ -66,7 +68,7 @@ def get_character_db(lodestone_id:int) -> Character:
 def url_string(string:str):
     return string.replace(" ", "+")
 
-def get_actions():
-    with open(f"{data_path}/actions.json", "r") as f:
-        actions = json.load(f)
-    return actions
+def get_data(data:str) -> dict:
+    with open(f"{data_path}/{data}.json", "r") as f:
+        data = json.load(f)
+    return data

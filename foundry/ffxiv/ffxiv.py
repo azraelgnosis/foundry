@@ -3,9 +3,9 @@ from flask import (
 )
 
 from .data import (
-    WORLDS, search_character, get_character_api, get_actions
+    WORLDS, search_character, get_character_api, get_data
 )
-from .models import Character
+from .models import Character, Job
 
 bp = Blueprint('ffxiv', __name__, subdomain='ffxiv')
 
@@ -29,9 +29,23 @@ def character(lodestone_id):
 
 @bp.route('/actions/')
 def actions():
-    actions = get_actions()
+    actions = get_data("actions")
 
     #! this should go somewhere else
     types = ["Ability", "Spell"]
 
     return render_template('ffxiv/actions.html', actions=actions, types=types)
+
+@bp.route('/recipes/')
+def recipes():
+    from .models import Recipe
+    from .data import CRYSTALS
+
+    if request.method == 'POST':
+        return NotImplementedError
+    
+    recipes = get_data('recipes')
+
+    materials = []
+
+    return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, materials=materials, crystals=CRYSTALS)
