@@ -1,0 +1,47 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Material</th>
+                <td>Type</td>
+                <td>Value</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="POST">
+                <td><input type="text" id="name" name="name" required/></td>
+                <td>
+                    <select class="form-control" id="type" name="type">
+                        {% for class, types in types.items() %}
+                            <optgroup label="{{ class }}">{{ class }}</optgroup>
+                            {% for type in types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" id="value" name="value">
+                        {% for value in values %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><textarea id="description", name="description" value=""></textarea></td>
+                <td><input type="submit" /></td>
+            </form>
+
+            {% for key, material in materials.items() %}
+                <tr>
+                    <td>{{ material['name'] }}</td>
+                    <td>{{ material['type'] }}</td>
+                    <td>{{ material['value'] }}</td>
+                    <td>{{ material['description'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

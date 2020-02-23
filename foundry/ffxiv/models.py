@@ -68,8 +68,12 @@ class CharacterCreator:
 
 
 class Job:
+    #! The jobs are dicts rather than strings
+    #! How to handle role classificaitons?
     JOBS = {
-        "Hand": {},
+        "Hand": {
+            "Culinarian"
+        },
         "Land": {},
         "Magic": {
             "Astrologian": {},
@@ -116,6 +120,7 @@ class Effect:
     __slots__ = ["target", "effect", "degree", "duraiton"]
 
 class Recipe:
+    #! duplicate of Material.TYPES?
     TYPES = {
         "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
         "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
@@ -139,3 +144,35 @@ class Recipe:
         json = {key: getattr(self, key) for key in self.__slots__}
 
         return json
+
+class Item:
+    __slots__ = []
+    def json(self):
+        json = {key: getattr(self, key) for key in self.__slots__}
+        return json
+
+class Weapon(Item): pass
+class Tool(Item): pass
+class Armor(Item): pass
+class Accessory(Item): pass
+class Medicine(Item): pass
+class Meal(Item): pass
+class Material(Item):
+    #! duplicate of Recipe.TYPES?
+    TYPES = {
+        "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
+        "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
+        "Other": ["Other"]
+    }
+
+    #? obtained_by? purchased_from? dropped_by? used_for/in??
+    __slots__ = ["name", "type", "value", "description"] 
+
+    def __init__(self, name, type, value, description):
+        self.name = name
+        self.type = type
+        self.value = value
+        self.description = description
+
+class Minion(Item): pass
+class Mount(Item): pass

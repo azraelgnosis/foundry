@@ -25,7 +25,7 @@
                 <form method="POST">
                     <td><input type="text" class="form-control"name="name" /></td>
                     <td>
-                        <select class="form-control">
+                        <select class="form-control" id="job" name="job">
                             {% for discipline, classes in jobs.items() %}
                                 <optgroup label="{{ discipline }}">{{ discipline }}</optgroup>
                                 {% for job in classes %}
@@ -36,7 +36,7 @@
                     </td>
                     <td><input type="number" class="form-control-sm" id="level" name="level"/></td>
                     <td>
-                        <select class="form-control">
+                        <select class="form-control" id="type" name="type">
                             {% for class, types in types.items() %}
                                 <optgroup label="{{ class }}">{{ class }}</optgroup>
                                 {% for type in types %}
@@ -62,6 +62,7 @@
                         	    {% endfor %}
                         	</select>
                         </div>
+                        <!--! could make this hidden until first select is clicked -->
                         <div class="form-group" style="display:flex" id="crystalsB">
                         	<input type="number" class="form-control-sm" id="num_crystalsB" name="num_crystalsB" />
                         	<select class="form-control-sm" id="type_crytalsB" name="type_crystalsB">

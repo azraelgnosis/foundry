@@ -19,9 +19,12 @@ WORLDS = {
     }
 }
 
+#! Should probably go somewhere in models
 ELEMENTS = ("Earth", "Fire", "Ice", "Lightning", "Water", "Wind")
 CRYSTAL_CONFIGURATIONS = ("Shard", "Crystal", "Cluster") #? There's probably a better word than "configuraiton"
 CRYSTALS = {element: [configuration for configuration in CRYSTAL_CONFIGURATIONS] for element in ELEMENTS}
+
+VALUES = ("Unsellable",)
 
 #TODO: Add separate pages
 def search_character(name:str, server=None):
@@ -68,7 +71,11 @@ def get_character_db(lodestone_id:int) -> Character:
 def url_string(string:str):
     return string.replace(" ", "+")
 
-def get_data(data:str) -> dict:
-    with open(f"{data_path}/{data}.json", "r") as f:
+def get_data(data_type:str) -> dict:
+    with open(f"{data_path}/{data_type}.json", "r") as f:
         data = json.load(f)
     return data
+
+def set_data(data_type:str, data:dict):
+    with open(f"{data_path}/{data_type}.json", "w") as f:
+        json.dump(data, f)
