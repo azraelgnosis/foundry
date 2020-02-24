@@ -72,28 +72,19 @@ def url_string(string:str):
     return string.replace(" ", "+")
 
 def get_data(data_type:str) -> dict:
-    from. models import Item
+    from. models import Action, Item
 
     types = {
+        "actions": Action,
         "items": Item
     }
     
     with open(f"{data_path}/{data_type}.json", "r") as f:
         json_data = json.load(f)
 
-    data = {key: types.get(data_type)(obj) for key, obj in json_data.items()}
+    data = {key.lower(): types.get(data_type)(obj) for key, obj in json_data.items()}
     
     return data
-        
-def get_actions() -> dict:
-    from .models import Action
-
-    with open(f"{data_path}/actions.json", "r") as f:
-        json_data = json.load(f)
-
-    data = {}
-    for key, obj in json_data.items():
-        data[obj['name']] = Action(obj)
 
 def get_items() -> dict:
     from .models import Item

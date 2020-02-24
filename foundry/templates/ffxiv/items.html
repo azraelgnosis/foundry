@@ -1,37 +1,60 @@
 {% extends 'ffxiv/base.html' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='ffxiv/css/items.css') }}" />
+{% endblock head %}
+
 {% block content %}
     <table class="table">
         <thead>
             <tr>
-                <th>Item</th>
-                <td>Type</td>
-                <td>Description</td>
+                <th scope='col'>Item</th>
+                <th scope='col'>Type</td>
+                <th scope='col'>Description</td>
             </tr>
         </thead>
         <tbody>
             <form method="POST">
                 <tr>
-                    <td><input type="text" id="name" name="name" required/></td>
+                    <td><input class="form-control" type="text" id="name" name="name" required/></td>
                     <td>
-                        <select class="form-control" id="type" name="type">
+                        <select class="form-control" id="item_type" name="item_type">
                             {% for type in types %}
                                 <option value="{{ type }}">{{ type }}</option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td><textarea id="description", name="description" value=""></textarea></td>
+                    <td><textarea class="form-control" id="description", name="description" value=""></textarea></td>
                     <td><input type="submit" value="Add Item"/></td>
                 </tr>
-                <tr>
-                    <td>
-                        <select id="value" name="value">
-                            {% for value in values %}
-                                <option value="{{ value }}">{{ value }}</option>
-                            {% endfor %}
-                        </select>
+                <tr class="item_type_form" id="Weapon">
+                    <td colspan=3>
+                        <table>
+                            <tr>
+                                <td><label for="weapon_type">Weapon Type</label>
+                                    <select></select>
+                                </td>
+                                <td><label for="damage">Damage</label><input type="number" min="0" id="damage" name="damage" /></td>
+                                <td><label for="delay">Delay</label><input type="number" min="0" step="0.01" id="delay" name="delay" /></td>
+                                <td><label for="auto_attack">Auto-Attack</label><input type="number" min="0" step='0.01' id="auto_attack" name="auto_attack" /></td>
+                                <td><label for="weapon_materia_slots">Materia Slots</label><input type="number" min="0" step="1" id="weapon_materia_slots" name="weapon_materia_slots" /></td>
+                            </tr>
+                        </table>
                     </td>
-                    <td></td>
+                </tr>
+                <tr class="item_type_form" id="Armor">
+                    <td colspan=3>
+                        <table class="table">
+                            <tr>
+                                <td><label for='armor_type'>Armor Type</label>
+                                    <select></select>
+                                </td>
+                                <td><label for="defence">Defence</label><input type="number" min="0" step="1" id='defence' name='defence' /></td>
+                                <td><label for="defence">Magic Defence</label><input type="number" min=0 step=1 id='mag_defence' name='mag_defence' /></td>
+                                <td><label for="armor_materia_slots">Materia Slots</label><input type="number" min="0" step="1" id="armor_materia_slots" name="armor_materia_slots" /></td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
                 
             </form>
@@ -46,3 +69,7 @@
         </tbody>
     </table>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='ffxiv/javascript/items.js') }}"></script>
+{% endblock scripts %}  <script src="{{ url_for('static', filename='ffxiv/javascript/items.js') }}"></script>

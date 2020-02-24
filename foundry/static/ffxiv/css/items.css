@@ -1,0 +1,11 @@
+.item_type_form {
+    display: none;
+}
+
+td[colspan] {
+    padding-top: 0;
+}
+
+textarea {
+    width: 100%;
+}

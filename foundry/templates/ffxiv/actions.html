@@ -9,13 +9,15 @@
         <thead>
             <tr>
                 <th>Action</th>
+                <th>Type</td>
             </tr>
         </thead>
+        <tbody>
             <form method="POST">
                 <tr>
                     <td><input type="text" class="form-control" name="name" placeholder="Action Name" required/></td>
                     <td>
-                        <select id="action_type">
+                        <select class="form-control" id="action_type">
                             <option></option>
                             {% for type in types %}
                                 <option value="{{ type }}">{{ type }}</option>
@@ -47,11 +49,12 @@
 
                 
             </form>
-        {% for action in actions %}
-            <tr>
-                <td>{{ action }}</td>
-            </tr>
-        {% endfor %}
+            {% for action in actions %}
+                <tr>
+                    <td>{{ action }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     

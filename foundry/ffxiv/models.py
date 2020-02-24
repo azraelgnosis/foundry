@@ -108,7 +108,7 @@ class Job:
         self.discipline = discipline if discipline in Job.DISCIPLINES else KeyError
 
 class Action:
-    __slots__ = ["name", "type", "level", "description"]
+    __slots__ = ["name", "type", 'job', "level", "description"]
 
     def __init__(self, obj:dict):
         for key, val in obj.items():
@@ -151,10 +151,9 @@ class Recipe:
         return json
 
 class Item:
-    TYPES = ('Other', 'Ingredient', 'Meal')
-    VALUES = ('Unsellable',)
+    TYPES = ('Other', 'Ingredient', 'Meal', 'Weapon', 'Armor')
 
-    __slots__ = ["name", "type", "description"] 
+    __slots__ = ["name", "type", "subtype", "sell_value", "description"] 
 
     def __init__(self, json:dict):
         for key, val in json.items(): setattr(self, key, val)
@@ -165,5 +164,12 @@ class Item:
 class Meal(Item):
     __slots__ = ["effects"]
 
-class Armor(Item):
-    __slots__ = ["defence", "magic_defense", "materia_slots"]
+class Gear(Item): # Weapons and Armor
+    __slots__ = ["jobs", "level", "req_level", "bonuses", "materia_slots"]
+class Weapon(Gear):
+    WEAPON_TYPES = ('Grimoire')
+    __slots__ = ["damage", "delay", "auto_attack"]
+
+class Armor(Gear):
+    ARMOR_TYPES = ('Body')
+    __slots__ = ["defence", "mag_defence"]

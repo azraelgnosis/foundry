@@ -30,8 +30,7 @@ def character(lodestone_id):
 
 @bp.route('/actions/')
 def actions():
-    from .data import get_actions
-    actions = get_actions()
+    actions = get_data('actions')
 
     #! this should go somewhere else
     types = ["Ability", "Spell"]
@@ -54,7 +53,7 @@ def items():
 
         set_data('items', items)
 
-    return render_template('ffxiv/items.html', items=items, types=Item.TYPES, values=Item.VALUES)
+    return render_template('ffxiv/items.html', items=items, types=Item.TYPES)
 
 @bp.route('/recipes/', methods=('GET', 'POST'))
 def recipes():
