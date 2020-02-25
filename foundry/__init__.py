@@ -6,7 +6,8 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
-        SERVER_NAME='foundry.com:5000'
+        #SERVER_NAME='foundry.com:5000'
+        SERVER_NAME='the-foundry.herokuapp.com/'
     )
 
     if test_config is None:

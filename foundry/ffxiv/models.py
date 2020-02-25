@@ -107,6 +107,9 @@ class Job:
         self.name = name if name in Job.JOB_list else KeyError
         self.discipline = discipline if discipline in Job.DISCIPLINES else KeyError
 
+class Log:
+    __slots__ = []
+
 class Action:
     __slots__ = ["name", "type", 'job', "level", "description"]
 

@@ -67,3 +67,7 @@ def recipes():
     items = get_data('items')
 
     return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, items=items, crystals=CRYSTALS)
+
+@bp.route('/logs/', methods=('GET', 'POST'))
+def logs():
+    return render_template('ffxiv/logs.html')

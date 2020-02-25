@@ -55,5 +55,17 @@
 		"Spriggan Graverobber",
 		"Qiqirn Shellsweeper",
 		"Sun Bat"
+	],
+	"Twin Adder": [
+		{"Amalj'aa Javelinier": 3},
+		"Heckler Imp",
+		"Scythe Mantis",
+		"Coliseum Python",
+		"Sylvan Scream",
+		"Kobold Pickman",
+		"Amalj'aa Bruiser",
+		"Ixali Deftalon",
+		"Amalj'aa Ranger",
+		"Ixali Fearcaller"
 	]
 }
