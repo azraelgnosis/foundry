@@ -4,7 +4,7 @@ from flask import (
 
 from .data import get_spells, anyflip_books
 
-bp = Blueprint('dnd5', __name__, subdomain='dnd5')
+bp = Blueprint('dnd5', __name__, url_prefix='/dnd5')
 
 @bp.route('/')
 def index():

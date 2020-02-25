@@ -7,7 +7,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         #SERVER_NAME='foundry.com:5000'
-        SERVER_NAME='the-foundry.herokuapp.com'
+        # SERVER_NAME='the-foundry.herokuapp.com'
     )
 
     if test_config is None:
@@ -19,10 +19,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello World'
 
     from . import foundry
     app.register_blueprint(foundry.bp)

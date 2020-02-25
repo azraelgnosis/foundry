@@ -8,7 +8,7 @@ from .data import (
 )
 from .models import Character, Job, Item
 
-bp = Blueprint('ffxiv', __name__, subdomain='ffxiv')
+bp = Blueprint('ffxiv', __name__, url_prefix='/ffxiv')
 
 @bp.route('/', methods=('GET', 'POST'))
 def index():

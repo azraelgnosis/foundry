@@ -4,7 +4,7 @@ from flask import (
 
 from .data import anyflip_books
 
-bp = Blueprint("coc7", __name__, subdomain='coc7')
+bp = Blueprint("coc7", __name__, url_prefix='/coc7')
 
 @bp.route('/')
 def index():
