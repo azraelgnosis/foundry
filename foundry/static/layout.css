@@ -2,3 +2,22 @@ html, body {
     width: 100%;
     height: 100%;
 }
+
+/* 
+.digits-1 { width: 2em; }
+.digits-2 { width: 3em; }
+.digits-3 { width: 3em; }
+.digits-4 { width: 4em; }
+.digits-5 { width: 4em; } 
+*/
+
+.digits-1 { width: 4ch; }
+.digits-2 { width: 5ch; }
+.digits-3 { width: 6ch; }
+.digits-4 { width: 7ch; }
+.digits-5 { width: 8ch; }
+.digits-6 { width: 9ch; }
+
+textarea {
+    width: 100%;
+}

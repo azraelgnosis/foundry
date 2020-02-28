@@ -2,7 +2,7 @@ import json
 import os
 import requests
 
-from .models import Character
+from .models import Character, Quest
 
 data_path = os.path.join(os.path.dirname(__file__), 'data')
 
@@ -72,18 +72,23 @@ def url_string(string:str):
     return string.replace(" ", "+")
 
 def get_data(data_type:str) -> dict:
-    from. models import Action, Item
+    from. models import Action, Item, Location, Quest
 
     types = {
         "actions": Action,
-        "items": Item
+        "items": Item,
+        "locations": Location.from_json,
+        "quests": Quest
     }
     
     with open(f"{data_path}/{data_type}.json", "r") as f:
         json_data = json.load(f)
 
-    data = {key.lower(): types.get(data_type)(obj) for key, obj in json_data.items()}
-    
+    # data = {key: types.get(data_type)(obj) for key, obj in json_data.items()}
+    data = {}
+    for key, obj in json_data.items():
+        data[key] = types.get(data_type)(obj)
+
     return data
 
 def get_items() -> dict:

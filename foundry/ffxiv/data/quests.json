@@ -1,0 +1,13 @@
+{
+    "As You Wish": {
+        "name": "As You Wish",
+        "quest_giver": "Wheiskaet",
+        "location": {
+            "zone": "Eastern La Noscea",
+            "coords": {
+                "x": 32,
+                "y": 30
+            }
+        }
+    }
+}

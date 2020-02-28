@@ -1,6 +1,68 @@
+class Model:
+    __slots__ = ["name"]
+    def __init__(self, json:dict):
+        for key, val in json.items(): setattr(self, key, val)
+    #def from_json(self, json:dict):  for key, val in json.items(): setattr(self, key, val)
+    def json(self): return {key: getattr(self, key) for key in self.__slots__}
+    def __repr__(self): return f"{self.name}"
+
+class Location(Model):
+    __slots__ = ["name", "type", "within", "description"]
+
+    @staticmethod
+    def from_json(json:dict):
+        TYPES = {
+            "landmass": Landmass,
+            "region": Region,
+            "zone": Zone,
+            "area": Area
+        }
+        return TYPES.get(json.get('type'))(json)
+
+class Landmass(Location):
+    __slots__ = ["regions"]
+
+    def __init__(self, json:dict):
+        super().__init__(json)
+        self._set_regions()
+
+    def _set_regions(self):
+        for key, region in self.regions.items():
+            self.regions[key] = Region(region)
+
+class Region(Location):
+    __slots__ = ["zones"]
+
+    def __init__(self, json:dict):
+        super().__init__(json)
+        self._set_zones()
+    
+    def _set_zones(self):
+        for key, zone in self.zones.items():
+            self.zones[key] = Zone(zone)
+
+class Zone(Location):
+    __slots__ = ["region", "areas", "connects_to", "aetherytes"]
+
+    def __init__(self, json:dict):
+        super().__init__(json)
+        self._set_areas()
+    
+    def _set_areas(self):
+        for key, area in self.areas.items():
+            self.areas[key] = Area(area)
+
+class Area(Location):
+    __slots__ = ["level_range", "POIs"]
 
 
-class Character:
+
+
+
+class NPC(Model):
+    __slots__ = ["name", "gender", "race", "subrace", "locations", "organization", "services", "bio", "quests_started", "quests_involved"]
+
+class Character(Model):
     __slots__ = ['lodestone_id', "player", "name", "race", "clan", "jobs", "server", 'avatar', 'portrait']
 
     def __init__(self, lodestone_id=None, name=None, jobs={}, avatar=None, portrait=None, server=None):
@@ -67,7 +129,7 @@ class CharacterCreator:
         Avatar = Character['Avatar']
 
 
-class Job:
+class Job(Model):
     #! The jobs are dicts rather than strings
     #! How to handle role classificaitons?
     JOBS = {
@@ -107,16 +169,11 @@ class Job:
         self.name = name if name in Job.JOB_list else KeyError
         self.discipline = discipline if discipline in Job.DISCIPLINES else KeyError
 
-class Log:
+class Log(Model):
     __slots__ = []
 
-class Action:
+class Action(Model):
     __slots__ = ["name", "type", 'job', "level", "description"]
-
-    def __init__(self, obj:dict):
-        for key, val in obj.items():
-            setattr(self, key, val)
-
 
 class Spell(Action):
     __slots__ = ["job", "dmg", "effect", "mp_cost", "cast_time", "recast", "range", "radius", "target"]
@@ -124,10 +181,10 @@ class Spell(Action):
 class Ability(Action):
     __slots__ = ["effect"]
 
-class Effect:
+class Effect(Model):
     __slots__ = ["attribute", "change", "duration"]
 
-class Recipe:
+class Recipe(Model):
     #! duplicate of Material.TYPES?
     TYPES = {
         "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
@@ -148,21 +205,11 @@ class Recipe:
         self.materials = materials
         self.crystals = crystals
 
-    def json(self):
-        json = {key: getattr(self, key) for key in self.__slots__}
-
-        return json
-
-class Item:
+class Item(Model):
     TYPES = ('Other', 'Ingredient', 'Meal', 'Weapon', 'Armor')
 
     __slots__ = ["name", "type", "subtype", "sell_value", "description"] 
-
-    def __init__(self, json:dict):
-        for key, val in json.items(): setattr(self, key, val)
-
-    def json(self):
-        return {key: getattr(self, key) for key in self.__slots__}
+    
 
 class Meal(Item):
     __slots__ = ["effects"]
@@ -176,3 +223,8 @@ class Weapon(Gear):
 class Armor(Gear):
     ARMOR_TYPES = ('Body')
     __slots__ = ["defence", "mag_defence"]
+
+class Quest(Model):
+    __slots__ = ["name", "quest_giver", "location", "quest_line", "level", "exp", "gil", "previous", "next", "description", "steps", "journal"]
+
+    def __repr__(self): return f"{self.name}"

@@ -71,3 +71,9 @@ def recipes():
 @bp.route('/logs/', methods=('GET', 'POST'))
 def logs():
     return render_template('ffxiv/logs.html')
+
+@bp.route('/quests/', methods=('GET', 'POST'))
+def quests():
+    quests = get_data('quests')
+    locations = get_data('locations')
+    return render_template('ffxiv/quests.html', quests=quests, locations=locations)

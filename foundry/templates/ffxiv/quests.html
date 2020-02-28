@@ -1,0 +1,66 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Quest</th>
+                <th>Quest Giver</th>
+                <th>Location</th>
+                <th>Quest Line</th>
+                <th>Level</th>
+                <th>EXP</th>
+                <th>Gil</th>
+                <th>Previous</th>
+                <th>Next</th>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="POST">
+                <tr>
+                    <td><input class="form-control" type="text" name="name" id="name" /></td>
+                    <td><input class="form-control" type="text" name="giver" id="giver" /></td>
+                    <td class="form-group">
+                        <select class="form-control">
+                            {% for _, landmass  in locations.items() %}
+                                <!-- <optgroup label="{{ landmass.name }}"> -->
+                                    {% for _, region in landmass.regions.items() %}
+                                        <optgroup label="{{ region.name }}">
+                                            {% for _, zone in region.zones.items() %}
+                                                <option value="{{ zone.name }}">{{ zone.name }}</option>                                                
+                                            {% endfor %}
+                                        </optgroup>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                        (
+                            <label for="x_coord">X: </label><input class="digits-3" type="number" step=0.1 name="x_coord" id="x_coord" />
+                            <label for="y_coord">Y: </label><input class="digits-3" type="number" step=0.1 name="y_coord" id="y_coord" />
+                        )
+                    </td>
+                    <td>
+                        <select>
+                            
+                        </select>
+                    </td>
+                    <td><input class="digits-2" type="number" step=1 name="level" id="level" /></td>
+                    <td><input class="digits-6" type="number" step=1 name="exp" id="exp" /></td>
+                    <td><input class="digits-6" type="number" step=1 name="gil" id="gil" /></td>
+                </tr>
+                <tr>
+                    <td colspan=9>
+                        <label for="description">Description</label><textarea name="description" id="description"></textarea></td>
+                </tr>
+            </form>
+<!-- 
+            {% for _, quest in quests.items() %}
+                <tr>
+                    <td>{{ quest.name }}</td>
+                    <td>{{ quest.quest_giver }}</td>
+                    <td>{{ quest.location['zone'] }} {{ quest.location['coords'] }}</td>
+                </tr>
+            {% endfor %} -->
+        </tbody>
+    </table>
+{% endblock content %}
