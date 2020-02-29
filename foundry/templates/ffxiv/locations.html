@@ -1,0 +1,70 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='ffxiv/css/locations.css') }}" />
+{% endblock head %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="POST">
+                <tr>
+                    <td><input class="form-control" type="text" name="name" id="name" /></td>
+                    <td>
+                        <select class="form-control" name="type" id="type">
+                            {% for type in types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input class="form-control" type="submit" value="Add Location" /></td>
+                </tr>
+                <tr id="within">
+                    <td id="landmass">
+                        <label for="landmass">Landmass</label>
+                        <select class="form-control" name="landmass">
+                            {% for _, landmass in locations.items() %}
+                                <option value="{{ landmass.name }}">{{ landmass.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td id="region">
+                        <label for="region">Region</label>
+                        <select class="form-control" name="region">
+                        </select>
+                    </td>
+                    <td id="zone">
+                        <label for="zone">Zone</label>
+                        <select class="form-control" name="zone">
+                        </select>
+                    </td>
+                </tr>
+            </form>
+            {% for _, landmass in locations.items() %}
+                <tr class="table-dark"><td><h2>{{ landmass.name }}</h2></td></tr>
+                {% for _, region in landmass.regions.items() %}
+                    <tr><td><h4>{{ region.name }}</h4></td></tr>
+                        {% for _, zone in region.zones.items() %}
+                            <tr><td><h6>{{ zone.name }}</h6></td></tr>
+                            {% for _, area in zone.areas.items() %}
+                                <tr>
+                                    <td style="padding-left: 2em;">    {{ area.name }}</td>
+                                    <td>    {{ area.type }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='ffxiv/javascript/locations.js') }}"></script>
+{% endblock scripts %}

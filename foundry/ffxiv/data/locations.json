@@ -1,22 +1,23 @@
 {
     "Vylbrand": {
         "name": "Vylbrand",
-        "type": "landmass",
+        "type": "Landmass",
         "regions": {
             "La Noscea": {
                 "name": "La Noscea",
-                "type": "region",
+                "type": "Region",
                 "zones": {
                     "Eastern La Noscea": {
                         "name": "Eastern La Noscea",
-                        "type": "zone",
+                        "type": "Zone",
                         "within": "La Noscea",
                         "region": "La Noscea",
                         "connects_to": ["Lower La Noscea", "Limsa Lominsa Lower Decks", "Middle La Noscea", "Upper La Noscea"],
                         "aetherytes": ["Costa del Sol", "Wineport"],
                         "areas": {
                             "Bloodshore": {
-                                "type": "area"
+                                "type": "Area",
+                                "name": "Bloodshore"
                             }
                         }
                     },

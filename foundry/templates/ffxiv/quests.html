@@ -41,26 +41,42 @@
                     </td>
                     <td>
                         <select>
-                            
+                            {% for quest_line in quest_lines %}
+                                <option value="{{ quesT_line }}">{{ quest_line }}</option>
+                            {% endfor %}
                         </select>
                     </td>
                     <td><input class="digits-2" type="number" step=1 name="level" id="level" /></td>
                     <td><input class="digits-6" type="number" step=1 name="exp" id="exp" /></td>
                     <td><input class="digits-6" type="number" step=1 name="gil" id="gil" /></td>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" value="Add Quest" /></td>
                 </tr>
+                
                 <tr>
                     <td colspan=9>
                         <label for="description">Description</label><textarea name="description" id="description"></textarea></td>
                 </tr>
             </form>
-<!-- 
+
             {% for _, quest in quests.items() %}
                 <tr>
                     <td>{{ quest.name }}</td>
                     <td>{{ quest.quest_giver }}</td>
                     <td>{{ quest.location['zone'] }} {{ quest.location['coords'] }}</td>
+                    <td>{{ quest.quest_line }}</td>
+                    <td>{{ quest.level }}</td>
+                    <td>{{ quest.exp }}</td>
+                    <td>{{ quest.gil }}</td>
+                    <td></td>
+                    <td></td>
+                    <td class="btn-group">
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
                 </tr>
-            {% endfor %} -->
+            {% endfor %}
         </tbody>
     </table>
 {% endblock content %}

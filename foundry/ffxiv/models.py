@@ -7,15 +7,17 @@ class Model:
     def __repr__(self): return f"{self.name}"
 
 class Location(Model):
+    TYPES = ["Landmass", "Region", "Zone", "Area"]
+
     __slots__ = ["name", "type", "within", "description"]
 
     @staticmethod
     def from_json(json:dict):
         TYPES = {
-            "landmass": Landmass,
-            "region": Region,
-            "zone": Zone,
-            "area": Area
+            "Landmass": Landmass,
+            "Region": Region,
+            "Zone": Zone,
+            "Area": Area
         }
         return TYPES.get(json.get('type'))(json)
 

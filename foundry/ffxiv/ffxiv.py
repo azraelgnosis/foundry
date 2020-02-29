@@ -76,4 +76,15 @@ def logs():
 def quests():
     quests = get_data('quests')
     locations = get_data('locations')
-    return render_template('ffxiv/quests.html', quests=quests, locations=locations)
+
+    # TODO: this should go somewhere else
+    quest_lines = ["Seventh Umbral Era", "Seventh Astral Era", "Heavensward", "Dragonsong War", "Stormblood", "The Legend Returns", "Shadowbringers", "Post-Shadowbringers"]
+
+    return render_template('ffxiv/quests.html', quests=quests, locations=locations, quest_lines=quest_lines)
+
+@bp.route('/locations/', methods=('GET', 'POST'))
+def locations():
+    from .models import Location
+    locations = get_data('locations')
+
+    return render_template('ffxiv/locations.html', locations=locations, types=Location.TYPES)

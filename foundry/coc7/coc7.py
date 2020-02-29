@@ -10,7 +10,7 @@ bp = Blueprint("coc7", __name__, url_prefix='/coc7')
 def index():
     return render_template('coc7/index.html')
 
-@bp.route('/characters/new', methods=('GET', 'POST'))
+@bp.route('/characters/<character>', methods=('GET', 'POST'))
 def new_character():
     return
 
