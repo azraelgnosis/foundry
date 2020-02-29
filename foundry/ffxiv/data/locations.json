@@ -1,4 +1,9 @@
 {
+    "Aldenard": {
+        "name": "Aldenard",
+        "type": "Landmass",
+        "regions": {}
+    },
     "Vylbrand": {
         "name": "Vylbrand",
         "type": "Landmass",

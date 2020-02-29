@@ -23,12 +23,12 @@
                             {% endfor %}
                         </select>
                     </td>
-                    <td><input class="form-control" type="submit" value="Add Location" /></td>
+                    <td><input class="form-control btn btn-primary" type="submit" value="Add Location" /></td>
                 </tr>
                 <tr id="within">
                     <td id="landmass">
                         <label for="landmass">Landmass</label>
-                        <select class="form-control" name="landmass">
+                        <select class="form-control" name="landmass" id="landmass">
                             {% for _, landmass in locations.items() %}
                                 <option value="{{ landmass.name }}">{{ landmass.name }}</option>
                             {% endfor %}
@@ -36,13 +36,11 @@
                     </td>
                     <td id="region">
                         <label for="region">Region</label>
-                        <select class="form-control" name="region">
-                        </select>
+                        <select class="form-control" name="region" id="region"></select>
                     </td>
                     <td id="zone">
                         <label for="zone">Zone</label>
-                        <select class="form-control" name="zone">
-                        </select>
+                        <select class="form-control" name="zone" id="zone"></select>
                     </td>
                 </tr>
             </form>
@@ -66,5 +64,8 @@
 {% endblock content %}
 
 {% block scripts %}
+    <script>
+        var locations = {{ locations |json_dumps |safe }};
+    </script>
     <script src="{{ url_for('static', filename='ffxiv/javascript/locations.js') }}"></script>
 {% endblock scripts %}

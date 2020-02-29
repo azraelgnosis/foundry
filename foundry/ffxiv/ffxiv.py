@@ -84,7 +84,15 @@ def quests():
 
 @bp.route('/locations/', methods=('GET', 'POST'))
 def locations():
+    from json import dumps
     from .models import Location
     locations = get_data('locations')
 
     return render_template('ffxiv/locations.html', locations=locations, types=Location.TYPES)
+
+#? This only applies to the current blueprint but maybe I should make it more global
+# adds a custom jinja filter called `json_dumps` to enable recursive JSON serialization
+@bp.app_template_filter("json_dumps")
+def json_dumps(obj):
+    from json import dumps
+    return dumps(obj, default=lambda o:o.json())

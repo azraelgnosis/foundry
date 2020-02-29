@@ -1,12 +1,15 @@
 class Model:
     __slots__ = ["name"]
     def __init__(self, json:dict):
+        for attr in self.__slots__: setattr(self, attr, None)
         for key, val in json.items(): setattr(self, key, val)
     #def from_json(self, json:dict):  for key, val in json.items(): setattr(self, key, val)
     def json(self): return {key: getattr(self, key) for key in self.__slots__}
     def __repr__(self): return f"{self.name}"
 
 class Location(Model):
+    from json import dumps
+
     TYPES = ["Landmass", "Region", "Zone", "Area"]
 
     __slots__ = ["name", "type", "within", "description"]
