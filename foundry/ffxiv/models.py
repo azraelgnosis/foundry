@@ -1,4 +1,7 @@
 class Model:
+    """
+    Serves as the bases for all model classes
+    """
     __slots__ = ["name"]
     def __init__(self, json:dict):
         for attr in self.__slots__: setattr(self, attr, None)
@@ -8,59 +11,41 @@ class Model:
     def __repr__(self): return f"{self.name}"
 
 class Location(Model):
-    from json import dumps
-
     TYPES = ["Landmass", "Region", "Zone", "Area"]
 
-    __slots__ = ["name", "type", "within", "description"]
+    __slots__ = ['name', 'type', 'subregions', 'within']
+
+    def __init__(self, name=None, loc_type=None, within=[]):
+        self.name = name
+        self.type = loc_type
+        self.within = within
+
+        self.subregions = {}
+
+    def _set_subregions(self):
+        for key, subregion in self.subregions.items():
+            self.subregions[key] = Location.from_json(subregion)
+
+    def get_subregion(self, subregion:str) -> 'Location':
+        return self.subregions.get(subregion)
+
+    def add_subregion(self, subregion:'Location'):
+        self.subregions[subregion.name] = subregion
+    
+    def del_subregions(self, subregion:'str'):
+        del self.subregions[subregion]
 
     @staticmethod
-    def from_json(json:dict):
-        TYPES = {
-            "Landmass": Landmass,
-            "Region": Region,
-            "Zone": Zone,
-            "Area": Area
-        }
-        return TYPES.get(json.get('type'))(json)
+    def from_json(JSON:dict) -> 'Location':
+        new_location = Location()
+        for key, val in JSON.items():
+            setattr(new_location, key, val)
 
-class Landmass(Location):
-    __slots__ = ["regions"]
+        new_location._set_subregions()
 
-    def __init__(self, json:dict):
-        super().__init__(json)
-        self._set_regions()
+        return new_location
 
-    def _set_regions(self):
-        for key, region in self.regions.items():
-            self.regions[key] = Region(region)
-
-class Region(Location):
-    __slots__ = ["zones"]
-
-    def __init__(self, json:dict):
-        super().__init__(json)
-        self._set_zones()
-    
-    def _set_zones(self):
-        for key, zone in self.zones.items():
-            self.zones[key] = Zone(zone)
-
-class Zone(Location):
-    __slots__ = ["region", "areas", "connects_to", "aetherytes"]
-
-    def __init__(self, json:dict):
-        super().__init__(json)
-        self._set_areas()
-    
-    def _set_areas(self):
-        for key, area in self.areas.items():
-            self.areas[key] = Area(area)
-
-class Area(Location):
-    __slots__ = ["level_range", "POIs"]
-
-
+    def __repr__(self): return f"{self.name}: {self.type}"
 
 
 

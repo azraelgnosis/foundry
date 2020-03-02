@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request
+    Blueprint, redirect, render_template, request, url_for
 )
 import json
 
@@ -84,15 +84,63 @@ def quests():
 
 @bp.route('/locations/', methods=('GET', 'POST'))
 def locations():
-    from json import dumps
     from .models import Location
+
     locations = get_data('locations')
 
+    #! User can add an region/zone/area without filling out landmass/region/zone
+    if request.method == 'POST':
+        name = request.form['name']
+        loc_type = request.form['type']
+        within = {loc_type: request.form[loc_type.lower()] for loc_type in Location.TYPES[:-1]}
+
+        new_location = Location(name, loc_type, within)
+
+        if loc_type == 'landmass':
+            locations[new_location.name] = new_location
+            return redirect(url_for('ffxiv.locations'))
+
+        landmass = locations.get(within['Landmass'])
+        region = landmass.get_subregion(within['Region'])
+        zone = region.get_subregion(within['Zone'])
+        if zone:
+            zone.add_subregion(new_location)
+        elif region:
+            region.add_subregion(new_location)
+        elif landmass:
+            landmass.add_subregion(new_location)
+        else:
+            locations[new_location.name] = new_location
+
+        set_data('locations', locations)
+
     return render_template('ffxiv/locations.html', locations=locations, types=Location.TYPES)
+
+# @bp.route('/locations/delete/<landmass>/')
+# @bp.route('/locations/delete/<landmass>/<region>')
+# @bp.route('/locations/delete/<landmass>/<region>/<zone>')
+# @bp.route('/locations/delete/<landmass>/<region>/<zone>/<area>')
+# def alter_location(landmass=None, region=None, zone=None, area=None):
+#     locations = get_data('locations')
+
+#     landmass = locations.get(landmass)
+#     region = landmass.get_subregion(region)
+#     zone = region.get_subregion(zone)
+#     area = region.get_subregion(area)
+
+#     if area: zone.del_subregion(area)
+#     elif zone: region.del_subregion(zone)
+#     elif region: landmass.del_subregion(region)
+#     elif landmass: del locations[landmass]
+#     else:
+#         return KeyError
+
+#     set_data('locations', locations)
+
 
 #? This only applies to the current blueprint but maybe I should make it more global
 # adds a custom jinja filter called `json_dumps` to enable recursive JSON serialization
 @bp.app_template_filter("json_dumps")
 def json_dumps(obj):
     from json import dumps
-    return dumps(obj, default=lambda o:o.json())
+    return dumps(obj, default=lambda obj:obj.json())

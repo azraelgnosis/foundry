@@ -2,37 +2,50 @@
     "Aldenard": {
         "name": "Aldenard",
         "type": "Landmass",
-        "regions": {}
+        "subregions": {},
+        "within": []
     },
     "Vylbrand": {
         "name": "Vylbrand",
         "type": "Landmass",
-        "regions": {
+        "subregions": {
             "La Noscea": {
                 "name": "La Noscea",
                 "type": "Region",
-                "zones": {
+                "subregions": {
                     "Eastern La Noscea": {
                         "name": "Eastern La Noscea",
                         "type": "Zone",
-                        "within": "La Noscea",
-                        "region": "La Noscea",
-                        "connects_to": ["Lower La Noscea", "Limsa Lominsa Lower Decks", "Middle La Noscea", "Upper La Noscea"],
-                        "aetherytes": ["Costa del Sol", "Wineport"],
-                        "areas": {
+                        "subregions": {
                             "Bloodshore": {
+                                "name": "Bloodshore",
                                 "type": "Area",
-                                "name": "Bloodshore"
+                                "subregions": {},
+                                "within": {}
+                            },
+                            "asdf": {
+                                "name": "asdf",
+                                "type": "Area",
+                                "subregions": {},
+                                "within": {
+                                    "Landmass": "Vylbrand",
+                                    "Region": "La Noscea",
+                                    "Zone": "Eastern La Noscea"
+                                }
                             }
-                        }
+                        },
+                        "within": {}
                     },
                     "Middle La Noscea": {
                         "name": "Middle La Noscea",
                         "type": "zone",
-                        "areas": {}
+                        "subregions": {},
+                        "within": []
                     }
-                }
+                },
+                "within": []
             }
-        }
+        },
+        "within": []
     }
 }
