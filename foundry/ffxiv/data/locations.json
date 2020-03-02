@@ -22,16 +22,6 @@
                                 "type": "Area",
                                 "subregions": {},
                                 "within": {}
-                            },
-                            "asdf": {
-                                "name": "asdf",
-                                "type": "Area",
-                                "subregions": {},
-                                "within": {
-                                    "Landmass": "Vylbrand",
-                                    "Region": "La Noscea",
-                                    "Zone": "Eastern La Noscea"
-                                }
                             }
                         },
                         "within": {}
