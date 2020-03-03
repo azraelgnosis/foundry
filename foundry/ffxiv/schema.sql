@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS recipes;
 
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,4 +27,16 @@ CREATE TABLE recipes (
 --     name TEXT NOT NULL,
 --     type TEXT NOT NULL,
 --     FOREIGN KEY (within) REFERENCES locations (location_id)
+-- );
+
+-- CREATE TABLE recipes (
+--     recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     name TEXT NOT NULL,
+--     job TEXT,
+--     level INTEGER,
+--     type TEXT,
+--     num_crafted INTEGER,
+--     difficulty INTEGER,
+--     durability INTEGER,
+--     max_quality INTEGER,
 -- );

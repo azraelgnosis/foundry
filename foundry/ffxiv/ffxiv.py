@@ -61,7 +61,7 @@ def recipes():
     from .data import CRYSTALS
 
     if request.method == 'POST':
-        return NotImplementedError
+        pass
     
     recipes = get_data('recipes')
     items = get_data('items')

@@ -24,9 +24,9 @@
                         <select class="form-control">
                             {% for _, landmass  in locations.items() %}
                                 <!-- <optgroup label="{{ landmass.name }}"> -->
-                                    {% for _, region in landmass.regions.items() %}
+                                    {% for _, region in landmass.subregions.items() %}
                                         <optgroup label="{{ region.name }}">
-                                            {% for _, zone in region.zones.items() %}
+                                            {% for _, zone in region.subregions.items() %}
                                                 <option value="{{ zone.name }}">{{ zone.name }}</option>                                                
                                             {% endfor %}
                                         </optgroup>

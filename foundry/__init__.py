@@ -6,7 +6,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
-        DATABASE_FFXIV = os.path.join(os.path.dirname(__file__), 'ffxiv', 'data', 'ffxiv.sqlite'),
+        DATABASE_FFXIV = os.path.join(app.instance_path, 'ffxiv', 'ffxiv.sqlite'),
     )
 
     if test_config is None:
@@ -29,6 +29,7 @@ def create_app(test_config=None):
     app.register_blueprint(dnd5.bp)
 
     from .ffxiv import ffxiv
+    
     app.register_blueprint(ffxiv.bp)
 
     from .coc7 import coc7

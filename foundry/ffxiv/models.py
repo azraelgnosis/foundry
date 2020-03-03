@@ -181,6 +181,7 @@ class Recipe(Model):
         "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
         "Other": ["Other"]
     }
+    
     __slots__ = ["name", "job", "level", "type", "num_crafted", "difficulty", "durability", "max_quality", "materials", "crystals"]
 
     def __init__(self, name, job, level, type, num_crafted, difficulty, durability, max_quality, materials, crystals):
@@ -198,6 +199,7 @@ class Recipe(Model):
 class Item(Model):
     TYPES = ('Other', 'Ingredient', 'Meal', 'Weapon', 'Armor')
 
+    #? obtained_by, purchased_from, dropped_by, used_for
     __slots__ = ["name", "type", "subtype", "sell_value", "description"] 
     
 

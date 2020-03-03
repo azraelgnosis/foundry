@@ -8,7 +8,9 @@ import sqlite3
 
 from .models import Character, Quest
 
-data_path = os.path.join(os.path.dirname(__file__), 'data')
+
+def data_path():
+    return os.path.join(current_app.instance_path, 'ffxiv') #os.path.join(os.path.dirname(__file__), 'data')
 
 xivapi_url = 'https://xivapi.com/'
 
@@ -85,7 +87,7 @@ def get_data(data_type:str) -> dict:
         "quests": Quest
     }
     
-    with open(f"{data_path}/{data_type}.json", "r") as f:
+    with open(f"{data_path()}/{data_type}.json", "r") as f:
         json_data = json.load(f)
 
     # data = {key: types.get(data_type)(obj) for key, obj in json_data.items()}
@@ -98,7 +100,7 @@ def get_data(data_type:str) -> dict:
 def get_items() -> dict:
     from .models import Item
 
-    with open(f"{data_path}/items.json", "r") as f:
+    with open(f"{data_path()}/items.json", "r") as f:
         json_data = json.load(f)
 
     items = {name: Item(obj) for name, obj in json_data.items()}
@@ -108,7 +110,7 @@ def get_items() -> dict:
 def set_data(data_type:str, data:dict):
     json_data = {name: obj.json() for name, obj in data.items()}
 
-    with open(f"{data_path}/{data_type}.json", "w") as f:
+    with open(f"{data_path()}/{data_type}.json", "w") as f:
         json.dump(json_data, f, indent=4, default=lambda obj:obj.json())
 
 # SQL Database Functions
