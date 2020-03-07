@@ -11,13 +11,21 @@ html, body {
 .digits-5 { width: 4em; } 
 */
 
-.digits-1 { width: 4ch; }
-.digits-2 { width: 5ch; }
-.digits-3 { width: 6ch; }
-.digits-4 { width: 7ch; }
-.digits-5 { width: 8ch; }
-.digits-6 { width: 9ch; }
+.digits-1 { width: 6ch; }
+.digits-2 { width: 7ch; }
+.digits-3 { width: 8ch; }
+.digits-4 { width: 9ch; }
+.digits-5 { width: 10ch; }
+.digits-6 { width: 11ch; }
 
 textarea {
     width: 100%;
+}
+
+label {
+    font-weight: bold;
+}
+
+select.form-control {
+    width: max-content;
 }
