@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th>Recipe</th>
-                <th>Job</th>
                 <th>Level</th>
                 <th>Type</th>
                 <th># Crafted</th>
@@ -22,17 +21,7 @@
             <form method="POST">
                 <tr>
                     <td><input type="text" class="form-control" name="name" /></td>
-                    <td>
-                        <select class="form-control" id="job" name="job">
-                            {% for discipline, classes in jobs.items() %}
-                                <optgroup label="{{ discipline }}">{{ discipline }}</optgroup>
-                                {% for job in classes %}
-                                    <option value="{{ job }}">{{ job }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td><input type="number" max=80 min=0 class="form-control" id="level" name="level"/></td>
+                    <td><input type="number" max=80 min=0 class="form-control digits-2" id="level" name="level"/></td>
                     <td>
                         <select class="form-control" id="type" name="type">
                             {% for class, types in types.items() %}
@@ -47,8 +36,6 @@
                     <td><input type="number" min=0 class="form-control digits-4" id="difficulty" name="difficulty"/></td>
                     <td><input type="number" min=0 class="form-control digits-2" id="durability" name="durability"/></td>
                     <td><input type="number" min=0 class="form-control digits-5" id="max_quality" name="max_quality"/></td>
-                    
-                    
                 </tr>
                 <tr>
                     <td class="form-group" colspan=6>
@@ -64,11 +51,11 @@
                             </div>
                         {% endfor %}              
                     </td>
-                    <td class="form-group" colspan=2>
+                    <td class="form-group">
                         <label for="crystalsA">Crystals</label>
                         <div class="form-group" style="display:flex" id="crystalsA">
                         	<input type="number" class="form-control digits-1" id="num_crystalsA" name="num_crystalsA" />
-                        	<select class="form-control" id="type_crytalsB" name="type_crystalsB">
+                        	<select class="form-control" id="type_crytalsB" name="type_crystalsA">
                         	    {% for element, crystals in crystals.items() %}
                         	        <optgroup label="{{ element }}">{{ element }}</optgroup>
                         	        {% for crystal in crystals %}
@@ -93,10 +80,31 @@
                     </td>
                     <td><input class="form-control btn btn-primary" type="submit" value="Add Recipe"/></td>
                 </tr>
-            </form>            
-            {% for recipe in recipes %}
+            </form>
+            <thead>
                 <tr>
-                    <td>{{ recipe }}</td>
+                    <th>Recipe</th>
+                    <th>Level</th>
+                    <th>Type</th>
+                    <th># Crafted</th>
+                    <th>Difficulty</th>
+                    <th>Durability</th>
+                    <th>Max Quality</th>
+                </tr>
+            </thead>            
+            {% for _, recipe in recipes.items() %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.level }}</td>
+                    <td>{{ recipe.type }}</td>
+                    <td>{{ recipe.num_crafted }}</td>
+                    <td>{{ recipe.difficulty }}</td>
+                    <td>{{ recipe.durability }}</td>
+                    <td>{{ recipe.max_quality }}</td>
+                    <td>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

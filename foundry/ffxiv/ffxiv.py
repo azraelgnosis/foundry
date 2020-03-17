@@ -60,10 +60,14 @@ def recipes():
     from .models import Recipe
     from .data import CRYSTALS
 
-    if request.method == 'POST':
-        print("post")
-    
     recipes = get_data('recipes')
+
+    if request.method == 'POST':
+        new_recipe = Recipe.from_dict(request.form)
+        recipes[new_recipe.name] = new_recipe
+
+        set_data('recipes', recipes)    
+    
     items = get_data('items')
 
     return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, items=items, crystals=CRYSTALS)

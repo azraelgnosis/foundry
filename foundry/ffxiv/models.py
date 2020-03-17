@@ -6,7 +6,10 @@ class Model:
     def __init__(self, json:dict):
         for attr in self.__slots__: setattr(self, attr, None)
         for key, val in json.items(): setattr(self, key, val)
-    #def from_json(self, json:dict):  for key, val in json.items(): setattr(self, key, val)
+
+    @staticmethod
+    def from_dict(mapping:dict) -> 'Model': ...
+    
     def json(self): return {key: getattr(self, key) for key in self.__slots__}
     def __repr__(self): return f"{self.name}"
 
@@ -24,7 +27,7 @@ class Location(Model):
 
     def _set_subregions(self):
         for key, subregion in self.subregions.items():
-            self.subregions[key] = Location.from_json(subregion)
+            self.subregions[key] = Location.from_dict(subregion)
 
     def get_subregion(self, subregion:str) -> 'Location':
         return self.subregions.get(subregion)
@@ -36,7 +39,7 @@ class Location(Model):
         del self.subregions[subregion]
 
     @staticmethod
-    def from_json(JSON:dict) -> 'Location':
+    def from_dict(JSON:dict) -> 'Location':
         new_location = Location()
         for key, val in JSON.items():
             setattr(new_location, key, val)
@@ -46,7 +49,6 @@ class Location(Model):
         return new_location
 
     def __repr__(self): return f"{self.name}: {self.type}"
-
 
 
 class NPC(Model):
@@ -182,26 +184,54 @@ class Recipe(Model):
         "Other": ["Other"]
     }
     
-    __slots__ = ["name", "job", "level", "type", "num_crafted", "difficulty", "durability", "max_quality", "materials", "crystals"]
+    __slots__ = ["name", "level", "type", "num_crafted", "difficulty", "durability", "max_quality", "materials", "crystals"]
 
-    def __init__(self, name, job, level, type, num_crafted, difficulty, durability, max_quality, materials, crystals):
-        self.name = name
-        self.job = job
-        self.level = level
-        self.type = type
-        self.num_crafted = num_crafted
-        self.difficulty = difficulty
-        self.durability = durability
-        self.max_quality = max_quality
+    def __init__(self, materials:dict={}, crystals:dict={}):
         self.materials = materials
         self.crystals = crystals
+    # def __init__(self, name, level, type, num_crafted, difficulty, durability, max_quality):
+    #     self.name = name
+    #     self.level = level
+    #     self.type = type
+    #     self.num_crafted = num_crafted
+    #     self.difficulty = difficulty
+    #     self.durability = durability
+    #     self.max_quality = max_quality
+
+    def set_materials(self, materials:dict={}):
+        for material, num in materials.items():
+            if material:
+                self.materials[material] = int(num)
+        
+    def set_crystals(self, crystals:dict=None):
+        for crystal, num in crystals.items():
+            if crystal:
+                self.crystals[crystal] = int(num)
+
+    @staticmethod
+    def from_dict(mapping:dict) -> 'Recipe':
+        new_recipe = Recipe()
+        for attr in Recipe.__slots__:
+            if mapping.get(attr):
+                setattr(new_recipe, attr, mapping.get(attr))
+        
+        #? Any use to coercing any ints?
+        materials = {mapping.get('material'+str(i)): mapping.get('num_materials'+str(i)) for i in range(1, 7)}
+        new_recipe.set_materials(materials)
+
+        crystals = {
+            mapping.get('type_crystalsA'): mapping.get('num_crystalsA'),
+            mapping.get('type_crystalsB'): mapping.get('num_crystalsB')
+            }
+        new_recipe.set_crystals(crystals)
+        
+        return new_recipe
 
 class Item(Model):
     TYPES = ('Other', 'Ingredient', 'Meal', 'Weapon', 'Armor')
 
     #? obtained_by, purchased_from, dropped_by, used_for
-    __slots__ = ["name", "type", "subtype", "sell_value", "description"] 
-    
+    __slots__ = ["name", "type", "subtype", "sell_value", "description"]    
 
 class Meal(Item):
     __slots__ = ["effects"]

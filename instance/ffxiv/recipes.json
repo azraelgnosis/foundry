@@ -1,1 +1,34 @@
-{}
+{
+    "Bladder Component": {
+        "name": "Bladder Component",
+        "level": "1",
+        "type": "Other",
+        "num_crafted": "1",
+        "difficulty": "19",
+        "durability": "60",
+        "max_quality": "312",
+        "materials": {
+            "Bladder Component Materials": 1
+        },
+        "crystals": {
+            "Fire Shard": 1,
+            "Water Shard": 1
+        }
+    },
+    "Bladder Lining Component Materials": {
+        "name": "Bladder Lining Component Materials",
+        "level": "1",
+        "type": "Other",
+        "num_crafted": "1",
+        "difficulty": "28",
+        "durability": "60",
+        "max_quality": "234",
+        "materials": {
+            "Bladder Lining Component Materials": 1
+        },
+        "crystals": {
+            "Water Shard": 1,
+            "Lightning Shard": 1
+        }
+    }
+}
