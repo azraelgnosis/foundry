@@ -3,15 +3,19 @@ from flask import (
 )
 import json
 
-from .data import (
+from foundry.ffxiv.data import (
     WORLDS, search_character, get_character_api, get_data, set_data
 )
-from .models import Character, Job, Item
+from foundry.ffxiv.models import Character, Job, Item
 
 bp = Blueprint('ffxiv', __name__, url_prefix='/ffxiv')
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/')
 def index():
+    return render_template('ffxiv/index.html')
+
+@bp.route('/characters/', methods=('GET', 'POST'))
+def characters():
     characters = None
 
     if request.method == 'POST':
@@ -20,10 +24,11 @@ def index():
 
         characters = search_character(name, server)
 
-    return render_template('ffxiv/index.html', worlds=WORLDS, characters=characters)
+    return render_template('ffxiv/characters.html', worlds=WORLDS, characters=characters)
 
 @bp.route('/characters/<int:lodestone_id>')
 def character(lodestone_id):
+
     character = get_character_api(lodestone_id)
 
     return render_template('ffxiv/character.html', character=character)
@@ -48,7 +53,7 @@ def items():
         value = request.form.get('value')
         description = request.form.get('description')
 
-        new_item = Item({'name':name, 'type':Type, 'description':description})
+        new_item = Item.from_dict({'name':name, 'type':Type, 'description':description})
         items[new_item.name] = new_item
 
         set_data('items', items)
@@ -57,20 +62,33 @@ def items():
 
 @bp.route('/recipes/', methods=('GET', 'POST'))
 def recipes():
-    from .models import Recipe
-    from .data import CRYSTALS
+    from foundry.ffxiv.models import Recipe
+    from foundry.ffxiv.data import CRYSTALS, get_db
 
-    recipes = get_data('recipes')
+    db = get_db()
+    recipe_components = db.execute(
+        "SELECT recipes.name, recipes.level, recipes.type, recipes.yield, recipes.difficulty, recipes.durability, recipes.max_quality, recipes.crystalA, recipes.num_crystalA, recipes.crystalB, recipes.num_crystalB, components.name AS component, map.num " \
+            "FROM map_recipe_component AS map " \
+            "LEFT JOIN recipes ON recipes.pk = map.recipe_fk " \
+            "LEFT JOIN components ON components.pk = map.component_fk"
+    ).fetchall()
+
+    recipes = {}
+    for row in recipe_components:
+        name = row['name']
+        if not name in recipes:
+            new_recipe = Recipe.from_row(row)
+            recipes[name] = new_recipe
+        recipes.get(name).add_material(row['component'], row['num'])
+
 
     if request.method == 'POST':
-        new_recipe = Recipe.from_dict(request.form)
-        recipes[new_recipe.name] = new_recipe
+        pass
 
-        set_data('recipes', recipes)    
     
     items = get_data('items')
 
-    return render_template('ffxiv/recipes.html', recipes=recipes, jobs=Job.JOBS, types=Recipe.TYPES, items=items, crystals=CRYSTALS)
+    return render_template('ffxiv/recipes.html', jobs=Job.JOBS, types=Recipe.TYPES, items=items, crystals=CRYSTALS)
 
 @bp.route('/logs/', methods=('GET', 'POST'))
 def logs():
@@ -88,7 +106,7 @@ def quests():
 
 @bp.route('/locations/', methods=('GET', 'POST'))
 def locations():
-    from .models import Location
+    from models import Location
 
     locations = get_data('locations')
 
