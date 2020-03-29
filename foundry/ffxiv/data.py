@@ -61,10 +61,11 @@ def get_character_api(lodestone_id:int) -> Character:
     
     character = response['Character']
     name = character['Name']
+    avatar = character['Avatar']
     portrait = character['Portrait']
     jobs = character['ClassJobs']
 
-    character = Character(lodestone_id, name, jobs, portrait)
+    character = Character(lodestone_id, name, jobs, avatar, portrait)
 
     return character
 
@@ -115,13 +116,24 @@ def set_data(data_type:str, data:dict):
         json.dump(json_data, f, indent=4, default=lambda obj:obj.json())
 
 # SQL Database Functions
+class Row(sqlite3.Row):
+    def __init__(self, cursor, values):
+        self.cursor = cursor
+        self.values = values
+        self.columns = [tupe[0] for tupe in cursor.description]
+
+        for i, col in enumerate(self.columns):
+            setattr(self, col, values[i])
+
+    def __repr__(self): return ", ".join([f"{key}: {self[key]}" for key in self.keys()])
+
 def get_db() -> sqlite3.Connection:
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE_FFXIV'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
-        g.db.row_factory = sqlite3.Row
+        g.db.row_factory = Row #sqlite3.Row
 
     return g.db
 
