@@ -3,15 +3,32 @@ class Model:
     Serves as the bases for all model classes
     """
     __slots__ = ["name"]
-    def __init__(self, json:dict):
-        for attr in self.__slots__: setattr(self, attr, None)
-        for key, val in json.items(): setattr(self, key, val)
+    def __init__(self, name=None):
+        self.name = name
 
-    @staticmethod
-    def from_dict(mapping:dict) -> 'Model': ...
+    @classmethod
+    def from_dict(cls, mapping:dict):
+        new_obj = cls()
+        intersection = {key: val for key, val in mapping.items() if key in cls.__slots__}
+        for key, val in intersection.items():
+            setattr(new_obj, key, val)
+        return new_obj
+
+    @classmethod
+    def from_json(cls, json:dict): return cls.from_dict(json)
     
+    @classmethod
+    def from_row(cls, row:'Row'):
+        new_obj = cls()
+        intersection = {key: row[key] for key in row.keys() if key in cls.__slots__}
+        for col, val in intersection.items():
+            setattr(new_obj, col, val)
+
+        return new_obj
+
     def json(self): return {key: getattr(self, key) for key in self.__slots__}
     def __repr__(self): return f"{self.name}"
+
 
 class Location(Model):
     TYPES = ["Landmass", "Region", "Zone", "Area"]
@@ -114,13 +131,6 @@ class Character(Model):
         Character = json_data['Character']
         Avatar = Character['Avatar']
 
-class CharacterCreator:
-    @staticmethod
-    def from_xiv_api(json_data):
-        Character = json_data['Character']
-        Avatar = Character['Avatar']
-
-
 class Job(Model):
     #! The jobs are dicts rather than strings
     #! How to handle role classificaitons?
@@ -177,26 +187,19 @@ class Effect(Model):
     __slots__ = ["attribute", "change", "duration"]
 
 class Recipe(Model):
-    #! duplicate of Material.TYPES?
     TYPES = {
         "Alchemist": ["Reagent", "One-handed Conjurer's Arm", "Medicine", "Arcanist's Grimoire"],
+        "Armorer": ["Shield"],
+        "Carpenter": ["Shield"],
         "Culinarian": ["Ingredient", "Meal", "Fishing Tackle", "Gardening", "Tabletop", "Miscellany", "Dye"],
         "Other": ["Other"]
     }
     
-    __slots__ = ["name", "level", "type", "num_crafted", "difficulty", "durability", "max_quality", "materials", "crystals"]
+    __slots__ = ["name", "level", "type", "yield", "difficulty", "durability", "max_quality", "materials", "crystals"]
 
-    def __init__(self, materials:dict={}, crystals:dict={}):
-        self.materials = materials
-        self.crystals = crystals
-    # def __init__(self, name, level, type, num_crafted, difficulty, durability, max_quality):
-    #     self.name = name
-    #     self.level = level
-    #     self.type = type
-    #     self.num_crafted = num_crafted
-    #     self.difficulty = difficulty
-    #     self.durability = durability
-    #     self.max_quality = max_quality
+    def __init__(self):
+        self.materials = {}
+        self.crystals = {}
 
     def set_materials(self, materials:dict={}):
         for material, num in materials.items():
@@ -208,6 +211,27 @@ class Recipe(Model):
             if crystal:
                 self.crystals[crystal] = int(num)
 
+    def add_material(self, material:str, num:int):
+        self.materials[material] = num
+
+    @classmethod
+    def from_row(cls, row:'Row') -> 'Recipe':
+        new_recipe = Recipe()
+
+        intersection = {key: row[key] for key in row.keys() if key in cls.__slots__}
+        for col, val in intersection.items():
+            setattr(new_recipe, col, val)
+
+        crystals = {
+            row['crystalA']: row['num_crystalA'],
+            row['crystalB']: row['num_crystalB']
+        }
+        new_recipe.set_crystals(crystals)
+
+        return new_recipe
+        
+
+    #? defunct???
     @staticmethod
     def from_dict(mapping:dict) -> 'Recipe':
         new_recipe = Recipe()

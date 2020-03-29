@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>{{ character.name }}</h1>
-<img height=200 src="{{ character.portrait }}" />
+<img id="portrait" width=300px src="{{ character.portrait }}" alt="Character Portrait"/>
 
 <table>
     <thead>
@@ -31,7 +31,5 @@
         {% endfor %}
     </tbody>
 </table>
-
-<script src="{{ url_for('static', filename='ffxiv/javascript/character.js') }}"></script>
 
 {% endblock content %}

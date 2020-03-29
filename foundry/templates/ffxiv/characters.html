@@ -1,0 +1,46 @@
+{% extends 'ffxiv/base.html' %}
+
+{% block content %}
+    <form method='POST'>
+        <label for='name'>Character Name</label>
+        <input type="text" name="name" />
+
+        <label for='server'>Server</label>
+        <select name='server'>
+            <option value=""></option>
+            {% for data_center, servers in worlds['North American'].items() %}
+                <optgroup label="{{ data_center }}">
+                    {% for server in servers %}
+                        <option value="{{ server }}">{{ server }}</option>
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Search"/>
+    </form>
+
+    {% if characters %}
+        <p>{{ characters|length }} Results</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Character Name</th>
+                    <th>Lodestone ID</th>
+                    <th>Server</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for character in characters %}
+                        <tr>
+                            <td><img src="{{ character['Avatar'] }}" /></td>
+                            <td><a href="{{ url_for('ffxiv.character', lodestone_id=character['ID']) }}">{{ character['Name'] }}</a></td>
+                            <td>{{ character['ID'] }}</td>
+                            <td>{{ character['Server'] }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock content %}

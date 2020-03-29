@@ -28,4 +28,5 @@ label {
 
 select.form-control {
     width: max-content;
+    margin: 0;
 }

@@ -15,6 +15,7 @@
                 <th>Difficulty</th>
                 <th>Durability</th>
                 <th>Max Quality</th>
+                <th>Crystals</th>
             </tr>
         </thead>
         <tbody>            
@@ -36,23 +37,7 @@
                     <td><input type="number" min=0 class="form-control digits-4" id="difficulty" name="difficulty"/></td>
                     <td><input type="number" min=0 class="form-control digits-2" id="durability" name="durability"/></td>
                     <td><input type="number" min=0 class="form-control digits-5" id="max_quality" name="max_quality"/></td>
-                </tr>
-                <tr>
-                    <td class="form-group" colspan=6>
-                        <label>Materials</label>
-                        {% for row in range(2) %}
-                            <div class="form-group" style="display: flex"> 
-                                {% for col in range(1,4) %}
-                                    <div class="form-group" style="display: flex; flex-grow: 1;">
-                                        <input class="form-control digits-1" type="number" min=0 id="num_materials{{ (3*row)+col }}" name="num_materials{{ (3*row)+col }}" />
-                                        <input style="flex-grow: 1;" type="search" list="materials" id="material{{ (3*row)+col }}" name="material{{ (3*row)+col }}"/>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}              
-                    </td>
                     <td class="form-group">
-                        <label for="crystalsA">Crystals</label>
                         <div class="form-group" style="display:flex" id="crystalsA">
                         	<input type="number" class="form-control digits-1" id="num_crystalsA" name="num_crystalsA" />
                         	<select class="form-control" id="type_crytalsB" name="type_crystalsA">
@@ -64,6 +49,8 @@
                         	    {% endfor %}
                         	</select>
                         </div>
+                    </td>
+                    <td class="form-group">
                         <!--! could make this hidden until first select is clicked -->
                         <div class="form-group" style="display:flex" id="crystalsB">
                         	<input type="number" class="form-control digits-1" id="num_crystalsB" name="num_crystalsB" />
@@ -78,6 +65,21 @@
                         	</select>
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <td class="form-group" colspan=8>
+                        {% for row in range(2) %}
+                            <div class="form-group" style="display: flex"> 
+                                {% for col in range(1,4) %}
+                                    <div class="form-group" style="display: flex; flex-grow: 1;">
+                                        <input class="form-control digits-1" type="number" min=0 id="num_materials{{ (3*row)+col }}" name="num_materials{{ (3*row)+col }}" />
+                                        <input style="flex-grow: 1;" type="search" list="materials" placeholder="Material" id="material{{ (3*row)+col }}" name="material{{ (3*row)+col }}"/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}              
+                    </td>
+                    
                     <td><input class="form-control btn btn-primary" type="submit" value="Add Recipe"/></td>
                 </tr>
             </form>
@@ -92,15 +94,16 @@
                     <th>Max Quality</th>
                 </tr>
             </thead>            
-            {% for _, recipe in recipes.items() %}
+            
+            {% for recipe in recipes %}
                 <tr>
-                    <td>{{ recipe.name }}</td>
-                    <td>{{ recipe.level }}</td>
-                    <td>{{ recipe.type }}</td>
-                    <td>{{ recipe.num_crafted }}</td>
-                    <td>{{ recipe.difficulty }}</td>
-                    <td>{{ recipe.durability }}</td>
-                    <td>{{ recipe.max_quality }}</td>
+                    <td>{{ recipe['name'] }}</td>
+                    <td>{{ recipe['level'] }}</td>
+                    <td>{{ recipe['type'] }}</td>
+                    <td>{{ recipe['num_crafted'] }}</td>
+                    <td>{{ recipe['difficulty'] }}</td>
+                    <td>{{ recipe['durability'] }}</td>
+                    <td>{{ recipe['max_quality'] }}</td>
                     <td>
                         <button class="btn btn-warning">Edit</button>
                         <button class="btn btn-danger">Delete</button>
