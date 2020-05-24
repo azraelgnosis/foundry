@@ -1,4 +1,11 @@
-from .data import RACES
+import sqlite3
+
+from foundry.dnd5.data import RACES
+
+class Row(sqlite3.Row):
+    def __init__(self, cursor, something):
+        super(cursor)
+
 
 class Model:
     __slots__ = ["name"]

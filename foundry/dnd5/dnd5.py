@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template
 )
 
-from .data import get_spells, anyflip_books
+from foundry.dnd5.data import get_spells, anyflip_books
 
 bp = Blueprint('dnd5', __name__, url_prefix='/dnd5')
 
