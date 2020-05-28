@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block head %}{% endblock head %}
+
+{% block base %}
+    <nav class="navbar navbar-expand">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('valkyria.soldiers') }}">Soldiers</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock content %}
+{% endblock base %}
+
+{% block scripts %}{% endblock scripts %}

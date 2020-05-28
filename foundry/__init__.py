@@ -8,7 +8,8 @@ def create_app(test_config=None):
     app.config.from_mapping(
         DATABASE_FFXIV = os.path.join(app.instance_path, 'ffxiv', 'ffxiv.sqlite'),
         DATABASE_DEM3 = os.path.join(app.instance_path, 'dem3', 'dem3.sqlite'),
-        DATABASE_DND5 = os.path.join(app.instance_path, 'dnd5', 'dnd5.sqlite')
+        DATABASE_DND5 = os.path.join(app.instance_path, 'dnd5', 'dnd5.sqlite'),
+        DATABASE_VALKYRIA = os.path.join(app.instance_path, 'valkyria', 'valkyria.sqlite'),
     )
 
     if test_config is None:
@@ -35,9 +36,8 @@ def create_app(test_config=None):
     from foundry.coc7 import coc7, data
     app.register_blueprint(coc7.bp)
 
-    from foundry.dem3 import dem3, data, auth
-    data.init_app(app)
-    app.register_blueprint(dem3.bp)
-    app.register_blueprint(auth.bp)
+    from foundry.valkyria import valkyria, db
+    app.register_blueprint(valkyria.bp)
+    db.init_app(app)
 
     return app
