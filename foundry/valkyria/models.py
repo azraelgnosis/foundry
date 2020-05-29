@@ -1,7 +1,13 @@
 import sqlite3
 
 class Row(sqlite3.Row):
-    pass
+    def __init__(self, cursor, values):
+        self.columns = [col[0] for col in cursor.description]
+
+        self.val = values[1]
+        
+    
+    def __repr__(self): return f"{self.val}"
 
 class Model:
     __slots__ = ['id', 'val']
