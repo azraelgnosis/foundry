@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS map_soldiers_potentials;
 
 CREATE TABLE jobs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    val TEXT NOT NULL,
+    val TEXT NOT NULL
 );
 
 CREATE TABLE soldiers (
