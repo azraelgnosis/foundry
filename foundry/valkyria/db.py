@@ -3,7 +3,13 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 import sqlite3
 
-from foundry.valkyria.models import Row
+from foundry.valkyria.models import Row, Soldier, Job, Potential
+
+types = {
+    "jobs": Job,
+    "potentials": Potential,
+    "soldiers": Soldier,
+}
 
 def get_db() -> sqlite3.Connection:
     if 'db' not in g:
@@ -14,6 +20,24 @@ def get_db() -> sqlite3.Connection:
         g.db.row_factory = Row
 
     return g.db
+
+def select(table:str, columns:list=["*"], coerce=False) -> list:
+    """
+    SELECT `columns` FROM `table`
+
+    :param table:
+    :param columns:
+    """
+
+    SELECT = "SELECT {columns}".format(columns=", ".join(columns))
+    FROM = f"FROM {table}"
+    WHERE = ""
+    
+    results = get_db().execute(" ".join([SELECT, FROM, WHERE])).fetchall()
+    if coerce and (datatype := types.get(table)):
+        results = [datatype.from_row(result) for result in results]
+
+    return results
 
 def close_db(e=None):
     db = g.pop('db', None)
