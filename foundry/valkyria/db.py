@@ -3,7 +3,10 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 import sqlite3
 
+from foundry.db import DataManager
 from foundry.valkyria.models import Row, Soldier, Job, Potential
+
+GAME = 'valkyria'
 
 types = {
     "jobs": Job,
@@ -11,15 +14,7 @@ types = {
     "soldiers": Soldier,
 }
 
-def get_db() -> sqlite3.Connection:
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE_VALKYRIA'],
-            detect_types=sqlite3.PARSE_DECLTYPES
-        )
-        g.db.row_factory = Row
-
-    return g.db
+DM = DataManager(GAME)
 
 def select(table:str, columns:list=["*"], coerce=False) -> list:
     """
@@ -32,8 +27,8 @@ def select(table:str, columns:list=["*"], coerce=False) -> list:
     SELECT = "SELECT {columns}".format(columns=", ".join(columns))
     FROM = f"FROM {table}"
     WHERE = ""
-    
-    results = get_db().execute(" ".join([SELECT, FROM, WHERE])).fetchall()
+
+    results = get_db(GAME).execute(" ".join([SELECT, FROM, WHERE])).fetchall()
     if coerce and (datatype := types.get(table)):
         results = [datatype.from_row(result) for result in results]
 
@@ -46,7 +41,7 @@ def close_db(e=None):
         db.close()
 
 def init_db():
-    db = get_db()
+    db = get_db(GAME)
 
     with current_app.open_resource('valkyria/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))

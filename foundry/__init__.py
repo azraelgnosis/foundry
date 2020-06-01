@@ -6,6 +6,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
+        DATABASE_FOUNDRY = os.path.join(app.instance_path, 'foundry.sqlite'),
         DATABASE_FFXIV = os.path.join(app.instance_path, 'ffxiv', 'ffxiv.sqlite'),
         DATABASE_DEM3 = os.path.join(app.instance_path, 'dem3', 'dem3.sqlite'),
         DATABASE_DND5 = os.path.join(app.instance_path, 'dnd5', 'dnd5.sqlite'),
@@ -22,22 +23,20 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import foundry
-    app.register_blueprint(foundry.bp)
+    from . import foundry, db
+    db.init_app(app)
 
     from foundry.ffxiv import ffxiv, data
     app.register_blueprint(ffxiv.bp)
     data.init_app(app)
 
-    from foundry.dnd5 import dnd5, db
+    from foundry.dnd5 import dnd5
     app.register_blueprint(dnd5.bp)
-    db.init_app(app)
 
     from foundry.coc7 import coc7, data
     app.register_blueprint(coc7.bp)
 
     from foundry.valkyria import valkyria, db
     app.register_blueprint(valkyria.bp)
-    db.init_app(app)
 
     return app

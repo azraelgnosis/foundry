@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS jobs;
+DROP TABLE IF EXISTS ethnicities;
 DROP TABLE IF EXISTS soldiers;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS potentials;
@@ -7,13 +8,21 @@ DROP TABLE IF EXISTS map_soldiers_potentials;
 
 CREATE TABLE jobs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    val TEXT NOT NULL
+    val TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE ethnicities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    val TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE soldiers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     val TEXT NOT NULL,
-    job_id INTEGER NOT NULL
+    job_id INTEGER NOT NULL,
+    sex INTEGER NOT NULL,
+    ethnicity_id INTEGER NOT NULL,
+    FOREIGN KEY (ethnicity_id) REFERENCES ethnicities (id)
 );
 
 CREATE TABLE likes (
@@ -26,7 +35,7 @@ CREATE TABLE likes (
 
 CREATE TABLE potentials (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    val TEXT NOT NULL
+    val TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE map_soldiers_potentials (

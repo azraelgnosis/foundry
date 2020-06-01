@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template
 )
 
-from foundry.valkyria.db import select
+from foundry.valkyria.db import select, DM
 
 bp = Blueprint('valkyria', __name__, url_prefix='/valkyria')
 
@@ -12,8 +12,8 @@ def index():
 
 @bp.route('/soldiers/', methods=["GET"])
 def soldiers():
-    jobs = select("jobs")
-    soldiers = select("soldiers")
-    potentials = select("potentials")
+    jobs = DM.select("jobs")
+    soldiers = DM.select("soldiers")
+    potentials = DM.select("potentials")
 
     return render_template('valkyria/soldiers.html', jobs=jobs, soldiers=soldiers, potentials=potentials)
