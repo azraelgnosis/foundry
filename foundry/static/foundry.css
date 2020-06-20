@@ -3,12 +3,12 @@ html, body {
     height: 100%;
 }
 
-/* 
+/*
 .digits-1 { width: 2em; }
 .digits-2 { width: 3em; }
 .digits-3 { width: 3em; }
 .digits-4 { width: 4em; }
-.digits-5 { width: 4em; } 
+.digits-5 { width: 4em; }
 */
 
 .digits-1 { width: 6ch; }
@@ -29,4 +29,8 @@ label {
 select.form-control {
     width: max-content;
     margin: 0;
+}
+
+.flash {
+    color: red;
 }

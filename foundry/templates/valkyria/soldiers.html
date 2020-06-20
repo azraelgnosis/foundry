@@ -11,6 +11,8 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Sex</th>
+                <th>Ethnicity</th>
                 <th>Class</th>
                 <th>Potentials</th>
                 <th>Likes</th>
@@ -20,11 +22,22 @@
         <tbody>
             <tr>
                 <td><input type="text" form="add_soldier" name="name" placeholder="Name"/></td>
-
                 <td>
-                    <select form="add_soldier">
+                    <select form="add_soldier" name="sex">
+                        <option value="0">M</option>
+                        <option value="1">F</option>
+                    </select>
+                </td>
+                <td>
+                    <select form="add_soldier" name="ethnicity_id">
+                        <option value="1">Gallian</option>
+                        <option value="2">Darcsen</option>
+                    </select>
+                </td>
+                <td>
+                    <select form="add_soldier" name="job_id">
                         {% for job in jobs %}
-                            <option value="{{ job.val }}">{{ job.val }}</option>
+                            <option value="{{ loop.index }}">{{ job.val }}</option>
                         {% endfor %}
                     </select>
                 </td>
@@ -38,16 +51,21 @@
                 <td>
                     <select>
                         {% for soldier in soldiers %}
-                            
+
                         {% endfor %}
                     </select>
                 </td>
                 <td><input class="btn btn-primary" type="submit" form="add_soldier"/></td>
             </tr>
             {% for soldier in soldiers %}
-                <tr></tr>
+                <tr>
+                    <td>{{ soldier.val }}</td>
+                    <td>{{ "F" if soldier.sex else "M" }}</td>
+                    <td>{{ "Darcsen" if soldier.ethnicity else "Gallian" }}</td>
+                    <td>{{ soldier.job }}</td>
+                </tr>
             {% endfor %}
-            
+
         </tbody>
 
     </table>

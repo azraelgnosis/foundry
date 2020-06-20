@@ -6,7 +6,8 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
-        DATABASE_FOUNDRY = os.path.join(app.instance_path, 'foundry.sqlite'),
+        SECRET_KEY='dev',
+        DATABASE = os.path.join(app.instance_path, 'foundry.sqlite'),
         DATABASE_FFXIV = os.path.join(app.instance_path, 'ffxiv', 'ffxiv.sqlite'),
         DATABASE_DEM3 = os.path.join(app.instance_path, 'dem3', 'dem3.sqlite'),
         DATABASE_DND5 = os.path.join(app.instance_path, 'dnd5', 'dnd5.sqlite'),
@@ -20,10 +21,13 @@ def create_app(test_config=None):
 
     try:
         os.makedirs(app.instance_path)
-    except OSError:
+    except FileExistsError:
         pass
 
-    from . import foundry, db
+    from . import foundry, db, auth, admin
+    app.register_blueprint(foundry.bp)
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(admin.bp)
     db.init_app(app)
 
     from foundry.ffxiv import ffxiv, data

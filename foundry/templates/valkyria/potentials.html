@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form></form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Potential</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="potential_name"/></td>
+            </tr>
+            {% for potential in potentials %}
+                <tr>
+                    <td>{{ potential.val }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS map_user_role;
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    val TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    val TEXT NOT NULL
+);
+
+CREATE TABLE map_user_role (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    role_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+
+INSERT INTO users VALUES (NULL, "root", "toor");
+INSERT INTO roles VALUES (NULL, "admin");
+INSERT INTO map_user_role VALUES (NULL, 1, 1);
