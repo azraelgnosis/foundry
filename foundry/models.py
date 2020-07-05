@@ -38,13 +38,21 @@ class Model:
 
     @staticmethod
     def _coerce_type(val):
+        """
+        Coerces `val` as a float or int if applicable,
+        else returns original value.
+
+        :param val: Value to coerce.
+        """
+
         try:
-            val = int(val)
-        except ValueError:
-            try:
-                val = float(val)
-            except ValueError: pass
+            if "." in str(val):
+                float(val)
+            else:
+                int(val)
         except TypeError: pass
+        except ValueError: pass
+        
         return val
 
     @classmethod

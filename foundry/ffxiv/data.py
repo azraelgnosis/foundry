@@ -122,8 +122,8 @@ class Row(sqlite3.Row):
         self.values = values
         self.columns = [tupe[0] for tupe in cursor.description]
 
-        for i, col in enumerate(self.columns):
-            setattr(self, col, values[i])
+        for col, val in zip(self.columns, self.values):
+            setattr(self, col, val)
 
     def __repr__(self): return ", ".join([f"{key}: {self[key]}" for key in self.keys()])
 

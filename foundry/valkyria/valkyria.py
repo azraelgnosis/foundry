@@ -2,13 +2,11 @@ from flask import (
     Blueprint, flash, redirect, render_template, request, url_for
 )
 
-from foundry.db import DataManager
-from foundry.valkyria.models import Soldier
+from foundry.valkyria.db import ValkyriaDataManager
+from foundry.valkyria.models import Potential, Soldier
 
-
-GAME = 'valkyria'
 bp = Blueprint('valkyria', __name__, url_prefix='/valkyria')
-dm = DataManager(GAME)
+dm = ValkyriaDataManager()
 
 @bp.route('/')
 def index():
@@ -16,12 +14,9 @@ def index():
 
 @bp.route('/soldiers/', methods=["GET"])
 def soldiers():
-    jobs = dm.select("jobs")
-    soldiers = dm.select("soldiers",
-        columns=['soldier_val', 'ethnicity_val', 'job_val'],
-        join={'ethnicities': ('ethnicity_id'), 'jobs': ('job_id')},
-        datatype=Soldier)
-    potentials = dm.select("potentials")
+    jobs = dm.get_jobs()
+    soldiers = dm.get_soldiers()
+    potentials = dm.get_potentials()
 
     return render_template('valkyria/soldiers.html', jobs=jobs, soldiers=soldiers, potentials=potentials)
 
@@ -41,3 +36,26 @@ def add_soldier():
     flash(error)
 
     return redirect(url_for('valkyria.soldiers'))
+
+@bp.route('/potentials/', methods=['GET'])
+def potentials() -> list:
+    potentials = dm.get_potentials()
+
+    return render_template('valkyria/potentials.html', potentials=potentials)
+
+@bp.route('/potentials/', methods=['POST'])
+def add_potential():
+    new_potential = Potential.from_dict(request.form)
+
+    potentials = dm.select('potentials', where={'potential_val': new_potential.val})
+
+    error = None
+    if potentials:
+        error = "Potential already exists."
+
+    if not error:
+        dm.insert('potentials', new_potential.to_dict())
+
+    flash(error)
+
+    return redirect(url_for('valkyria.potentials'))

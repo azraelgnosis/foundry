@@ -45,7 +45,8 @@ CREATE TABLE likes (
 
 CREATE TABLE potentials (
     potential_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    potential_val TEXT UNIQUE NOT NULL
+    potential_val TEXT UNIQUE NOT NULL,
+    potential_text TEXT NOT NULL
 );
 
 CREATE TABLE map_soldiers_potentials (

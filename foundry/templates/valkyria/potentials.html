@@ -1,20 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'valkyria/base.html' %}
 
 {% block content %}
-    <form></form>
+    <form method="POST" id="add_potential"></form>
     <table class="table">
         <thead>
             <tr>
                 <th>Potential</th>
+                <th>Description</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" name="potential_name"/></td>
+                <td><input type="text" form="add_potential" name="potential_val"/></td>
+                <td><textarea form="add_potential" name="potential_text"></textarea></td>
+                <td><input class="btn btn-primary" type="submit" form="add_potential"/></td>
             </tr>
             {% for potential in potentials %}
                 <tr>
-                    <td>{{ potential.val }}</td>
+                    <td>{{ potential.potential_val }}</td>
+                    <td>{{ potential.potential_text }}</td>
+                    <td></td>
                 </tr>
             {% endfor %}
         </tbody>

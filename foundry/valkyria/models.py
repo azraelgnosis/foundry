@@ -14,4 +14,4 @@ class Job(Model):
     pass
 
 class Potential(Model):
-    pass
+    __slots__ = ['potential_id', 'potential_val', 'potential_text']
