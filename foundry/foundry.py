@@ -2,9 +2,9 @@ from flask import (
     Blueprint, render_template
 )
 
-from foundry.db import DataManager
+# from foundry.db import DataManager
 
-DM = DataManager()
+# DM = DataManager()
 
 bp = Blueprint("foundry", __name__)
 

@@ -2,11 +2,11 @@ from flask import (
     Blueprint, flash, redirect, render_template, request, url_for
 )
 
-from foundry.valkyria.db import ValkyriaDataManager
 from foundry.valkyria.models import Potential, Soldier
+from foundry.valkyria.db import ValkyriaLoreKeeper
 
 bp = Blueprint('valkyria', __name__, url_prefix='/valkyria')
-dm = ValkyriaDataManager()
+lk = ValkyriaLoreKeeper()
 
 @bp.route('/')
 def index():
@@ -14,9 +14,9 @@ def index():
 
 @bp.route('/soldiers/', methods=["GET"])
 def soldiers():
-    jobs = dm.get_jobs()
-    soldiers = dm.get_soldiers()
-    potentials = dm.get_potentials()
+    jobs = lk.get_jobs()
+    soldiers = lk.get_soldiers()
+    potentials = lk.get_potentials()
 
     return render_template('valkyria/soldiers.html', jobs=jobs, soldiers=soldiers, potentials=potentials)
 
@@ -24,14 +24,14 @@ def soldiers():
 def add_soldier():
     new_soldier = Soldier.from_dict(request.form)
 
-    soldiers = dm.select('soldiers', where={'soldier_val': new_soldier.val})
+    soldiers = lk.select('soldiers', where={'soldier_val': new_soldier.soldier_val})
 
     error = None
     if soldiers:
         error = "Soldier already exists."
 
     if not error:
-        dm.insert('soldiers', new_soldier.to_dict())
+        lk.insert('soldiers', new_soldier.to_dict())
 
     flash(error)
 
@@ -39,7 +39,7 @@ def add_soldier():
 
 @bp.route('/potentials/', methods=['GET'])
 def potentials() -> list:
-    potentials = dm.get_potentials()
+    potentials = lk.get_potentials()
 
     return render_template('valkyria/potentials.html', potentials=potentials)
 
@@ -47,14 +47,14 @@ def potentials() -> list:
 def add_potential():
     new_potential = Potential.from_dict(request.form)
 
-    potentials = dm.select('potentials', where={'potential_val': new_potential.val})
+    potentials = lk.select('potentials', where={'potential_val': new_potential.val})
 
     error = None
     if potentials:
         error = "Potential already exists."
 
     if not error:
-        dm.insert('potentials', new_potential.to_dict())
+        lk.insert('potentials', new_potential.to_dict())
 
     flash(error)
 

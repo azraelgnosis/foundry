@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" form="add_soldier" name="name" placeholder="Name"/></td>
+                <td><input type="text" form="add_soldier" name="soldier_val" placeholder="Name"/></td>
                 <td>
                     <select form="add_soldier" name="sex">
                         <option value="0">M</option>
@@ -59,7 +59,7 @@
             </tr>
             {% for soldier in soldiers %}
                 <tr>
-                    <td>{{ soldier.val }}</td>
+                    <td>{{ soldier.soldier_val }}</td>
                     <td>{{ "F" if soldier.sex else "M" }}</td>
                     <td>{{ "Darcsen" if soldier.ethnicity else "Gallian" }}</td>
                     <td>{{ soldier.job }}</td>

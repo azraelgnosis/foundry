@@ -37,7 +37,7 @@ class Model:
             setattr(self, key, val)
 
     @staticmethod
-    def _coerce_type(val):
+    def _coerce_type(val, separator=","):
         """
         Coerces `val` as a float or int if applicable,
         else returns original value.
@@ -45,14 +45,18 @@ class Model:
         :param val: Value to coerce.
         """
 
-        try:
-            if "." in str(val):
-                float(val)
-            else:
-                int(val)
-        except TypeError: pass
-        except ValueError: pass
-        
+        if isinstance(val, str):
+            if len(coll := val.split(separator)) > 1:
+                val = [Model._coerce_type(elem.strip()) for elem in coll]
+
+            try:
+                if "." in str(val):
+                    val = float(val)
+                else:
+                    val = int(val)
+            except TypeError: pass
+            except ValueError: pass
+
         return val
 
     @classmethod
@@ -82,7 +86,16 @@ class Model:
     def to_dict(self):
         return {key: getattr(self, key) for key in self.__slots__}
 
-    def __repr__(self): return f"{type(self).__name__}: {self.id} {self.val}"
+    def __repr__(self):
+        name = type(self).__name__.lower()
+        return f"{name}: {id} {val}".format(name=name, id=self[name+"_id"], val=self[name+"_val"])
+
+    def __getitem__(self, key):
+        try:
+            return getattr(self, key)
+        except TypeError:
+            raise KeyError
+
 
 class User(Model):
     __slots__ = ['password']
