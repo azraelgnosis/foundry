@@ -1,0 +1,15 @@
+name,license,location,defense,magick resist,element
+Headguard,Light Armor 2,Head,0,6,None
+Leather Breastplate,Light Armor 2,Body,6,0,None
+Pointy Hat,Mystic Armor 2,Head,0,6,None
+Silken Shirt,Mystic Armor 2,Body,6,0,None
+Bronze Helm,Heavy Armor 1,Head,0,6,None
+Bronze Armor,Heavy Armor 1,Body,7,0,None
+Buckler,Shields 1,Off Hand,9,0,None
+Headgear,Light Armor 2,Head,0,5,None
+Chromed Leathers,Light Armor 2,Body,5,0,None
+Magick Curch,Myster Armor 1,Head,0,5,None
+Light Woven Shirt,Mystic Armor 1,Body,5,0,None
+Leather Helm,Heavy Armor 1,Head,0,5,None
+Leather Armor,Heavy Armor 1,Body,6,0,None
+Leather Shield,Shields 1,Off Hand,7,0,None
